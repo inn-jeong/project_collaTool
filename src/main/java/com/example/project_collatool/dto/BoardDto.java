@@ -8,9 +8,9 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class BoardDto {
-    private Long bId;
-    private Long bProjectId;
-    private Long bUserId;
+    private Integer bId;
+    private Integer bProjectId;
+    private Integer bUserId;
     private String bTitle;
     private String bContent;
     private String bFname;

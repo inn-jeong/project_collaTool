@@ -11,10 +11,11 @@ import org.springframework.data.annotation.Persistent;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
-@Data
+@Entity
+@Getter
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity
+@Builder
 @Table(name = "users")
 public class UserEntity {
 

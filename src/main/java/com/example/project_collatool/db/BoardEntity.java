@@ -1,15 +1,14 @@
 package com.example.project_collatool.db;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.*;
 
 import jakarta.persistence.*;
-import lombok.NoArgsConstructor;
 
 @Entity
-@Data
+@Getter
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 @Table(name = "board")
 public class BoardEntity {
     @Id

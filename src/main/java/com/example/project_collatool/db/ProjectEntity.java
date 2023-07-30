@@ -1,17 +1,16 @@
 package com.example.project_collatool.db;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.*;
 
 import jakarta.persistence.*;
-import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
 @Entity
-@Data
+@Getter
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 @Table(name = "project")
 public class ProjectEntity {
 

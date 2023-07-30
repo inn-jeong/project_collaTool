@@ -17,9 +17,9 @@ public class UserRepositoryTest {
     public void InsertDummies(){
         IntStream.rangeClosed(1,10).forEach(i -> {
             UserEntity user = UserEntity.builder()
-                        .uId("test"+i)
-                        .uPwd("test"+i)
-                        .uEmail("test"+i)
+                        .uId("static/test" +i)
+                        .uPwd("static/test" +i)
+                        .uEmail("static/test" +i)
                         .uName("test..."+i)
                         .uJumin(i)
                         .uPhone(100+i)
@@ -33,9 +33,9 @@ public class UserRepositoryTest {
     @Test
     public void test1(){
         UserEntity user = UserEntity.builder()
-                .uId("test"+1)
-                .uPwd("test"+1)
-                .uEmail("test"+1)
+                .uId("static/test" +1)
+                .uPwd("static/test" +1)
+                .uEmail("static/test" +1)
                 .uName("test..."+1)
                 .uJumin(1)
                 .uPhone(100+1)
