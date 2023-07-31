@@ -31,7 +31,6 @@ public class UserConverter implements Converter<UserEntity,UserDto>{
                     .uName(userDto.getUName())
                     .uJumin(userDto.getUJumin())
                     .uPhone(userDto.getUPhone())
-                    .uPosition(userDto.getUPosition())
                     .uCreated(userDto.getUCreate())
                     .uSignout(userDto.getUSignout())
                     .build();
@@ -44,7 +43,6 @@ public class UserConverter implements Converter<UserEntity,UserDto>{
                     .uName(userDto.getUName())
                     .uJumin(userDto.getUJumin())
                     .uPhone(userDto.getUPhone())
-                    .uPosition(userDto.getUPosition())
                     .uSignout(0)
                     .build();
         }
@@ -64,7 +62,6 @@ public class UserConverter implements Converter<UserEntity,UserDto>{
         dto.setUName(entity.getUName());
         dto.setUJumin(entity.getUJumin());
         dto.setUPhone(entity.getUPhone());
-        dto.setUPosition(entity.getUPosition());
         dto.setUCreate(entity.getUCreated());
         dto.setUSignout(entity.getUSignout());
 
@@ -80,7 +77,6 @@ public class UserConverter implements Converter<UserEntity,UserDto>{
         dto.setUName(requestDto.getUName());
         dto.setUJumin(Integer.parseInt(requestDto.getUJumin()));
         dto.setUPhone(Integer.parseInt(requestDto.getUPhone()));
-        dto.setUPosition(Integer.parseInt(requestDto.getUPosition()));
 
         return dto;
     }

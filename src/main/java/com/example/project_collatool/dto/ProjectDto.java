@@ -10,12 +10,11 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ProjectDto {
-
     private Integer projectId;
     private String pName;
     private String pCategory;
-    private String pExplain;
-    private LocalDateTime pCreated;
-    private LocalDateTime pDeadline;
+    private String pDescript;
+    private String pCreated;
+    private String pDeadline;
     private Integer pPeople;
 }

@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.security.Principal;
 import java.util.Map;
 
 @RequiredArgsConstructor
@@ -55,6 +56,7 @@ public class LoginController {
         int result = service.loginCheck(user);
         log.info("@#  result ====>"+result);
         if(result == 1){
+
             return "redirect:/main";
         }
         return "redirect:/login/view";
@@ -64,6 +66,7 @@ public class LoginController {
     public String registerPage(Model model){
         UserRequestDto requestDto = new UserRequestDto();
         model.addAttribute("userDto",requestDto);
+
         return "user/user_register";
     }
 

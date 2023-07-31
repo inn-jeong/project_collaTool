@@ -22,4 +22,8 @@ public class PMemberEntity {
 
     @Column(name = "user_id", nullable = false)
     private Integer userId;
+
+    @Column(name = "u_position", nullable = false)
+    private Integer u_position;
+
 }

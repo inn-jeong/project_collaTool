@@ -6,25 +6,40 @@ import com.example.project_collatool.repository.ProjectRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
 public class ProjectConverter implements Converter<ProjectEntity, ProjectDto> {
     private final ProjectRepository projectRepository;
+    ProjectEntity entity;
     @Override
     public ProjectEntity toEntity(ProjectDto projectDto) {
-        Optional<ProjectEntity> byId = projectRepository.findById(projectDto.getProjectId());
+        if(projectDto.getProjectId() != null){
+            Optional<ProjectEntity> byId = projectRepository.findById(projectDto.getProjectId());
+            entity = ProjectEntity.builder()
+                    .projectId(byId.get().getProjectId())
+                    .pName(projectDto.getPName())
+                    .pCategory(projectDto.getPCategory())
+                    .pDescript(projectDto.getPDescript())
+                    .pCreated(LocalDate.parse(projectDto.getPCreated(),DateTimeFormatter.ofPattern("MM/dd/yyyy")))
+                    .pDeadline(LocalDate.parse(projectDto.getPDeadline(),DateTimeFormatter.ofPattern("MM/dd/yyyy")))
+                    .pPeople(1)
+                    .build();
+        }else{
+            entity = ProjectEntity.builder()
+                    .pName(projectDto.getPName())
+                    .pCategory(projectDto.getPCategory())
+                    .pDescript(projectDto.getPDescript())
+                    .pCreated(LocalDate.parse(projectDto.getPCreated(),DateTimeFormatter.ofPattern("MM/dd/yyyy")))
+                    .pDeadline(LocalDate.parse(projectDto.getPDeadline(),DateTimeFormatter.ofPattern("MM/dd/yyyy")))
+                    .pPeople(1)
+                    .build();
+        }
 
-        ProjectEntity entity = ProjectEntity.builder()
-                .projectId(byId.get().getProjectId())
-                .pName(projectDto.getPName())
-                .pCategory(projectDto.getPCategory())
-                .pExplain(projectDto.getPExplain())
-                .pCreated(projectDto.getPCreated())
-                .pDeadline(projectDto.getPDeadline())
-                .pPeople(projectDto.getPPeople())
-                .build();
 
         return entity;
     }
@@ -35,9 +50,9 @@ public class ProjectConverter implements Converter<ProjectEntity, ProjectDto> {
         dto.setProjectId(projectEntity.getProjectId());
         dto.setPName(projectEntity.getPName());
         dto.setPCategory(projectEntity.getPCategory());
-        dto.setPExplain(projectEntity.getPExplain());
-        dto.setPCreated(projectEntity.getPCreated());
-        dto.setPDeadline(projectEntity.getPDeadline());
+        dto.setPDescript(projectEntity.getPDescript());
+        dto.setPCreated(projectEntity.getPCreated().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
+        dto.setPDeadline(projectEntity.getPDeadline().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
         dto.setPPeople(projectEntity.getPPeople());
         return dto;
     }

@@ -45,9 +45,6 @@ public class UserEntity {
     @Column(name = "u_phone", nullable = false)
     private Integer uPhone;
 
-    @Column(name = "u_position", nullable = false)
-    private Integer uPosition;
-
     @CreationTimestamp
     @Column(name = "u_created", nullable = false)
     private Timestamp uCreated;

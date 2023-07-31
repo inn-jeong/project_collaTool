@@ -71,7 +71,6 @@ public class LoginServiceImpl implements LoginService{
                 .uName(userDto.getUName())
                 .uJumin(userDto.getUJumin())
                 .uPhone(userDto.getUPhone())
-                .uPosition(userDto.getUPosition())
                 .uSignout(0)
                 .build();
         userRepository.save(userEntity);

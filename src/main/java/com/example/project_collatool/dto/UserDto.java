@@ -18,7 +18,6 @@ public class UserDto {
     private String uName;
     private Integer uJumin;
     private Integer uPhone;
-    private Integer uPosition;
     private Timestamp uCreate;
     private Integer uSignout;
 }

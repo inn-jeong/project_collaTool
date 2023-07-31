@@ -26,18 +26,19 @@ public class SecurityConfig {
                         .requestMatchers(new AntPathRequestMatcher("/login/**")).permitAll()
                         .requestMatchers(new AntPathRequestMatcher("/loginRest/**")).permitAll()
                         .requestMatchers(new AntPathRequestMatcher("/main/**")).permitAll()
+                        .requestMatchers(new AntPathRequestMatcher("/**")).permitAll()
                         )
                 .formLogin((login) -> login
                         .loginPage("/login/view")
-//                        .loginProcessingUrl("/login/process")
+                        .loginProcessingUrl("/login/process")
                         .usernameParameter("uId")
                         .passwordParameter("uPwd")
-                        .defaultSuccessUrl("/main")
+                        .defaultSuccessUrl("/main/view")
 //                        .failureUrl("/login/view?login_try=yes")
                         )
                 .logout((logout) -> logout
                         .logoutRequestMatcher(new AntPathRequestMatcher("/user/logout"))
-                        .logoutSuccessUrl("/")
+                        .logoutSuccessUrl("/main/b_login")
                         .invalidateHttpSession(true))
 
         ;

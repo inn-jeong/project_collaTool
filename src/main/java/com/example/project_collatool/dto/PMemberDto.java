@@ -11,4 +11,5 @@ public class PMemberDto {
     private Integer id;
     private Integer projectId;
     private Integer userId;
+    private Integer u_position;
 }
