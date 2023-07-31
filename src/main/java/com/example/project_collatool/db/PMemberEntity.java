@@ -26,4 +26,5 @@ public class PMemberEntity {
     @Column(name = "u_position", nullable = false)
     private Integer u_position;
 
+
 }
