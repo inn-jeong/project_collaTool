@@ -49,18 +49,18 @@ public class LoginController {
         return "user/login";
     }
 
-    @PostMapping("/process")
-    public String loginProcess(UserDto user){
-        log.info("@# u_id ===>"+user.getUId());
-        log.info("@# u_pwd ===>"+user.getUPwd());
-        int result = service.loginCheck(user);
-        log.info("@#  result ====>"+result);
-        if(result == 1){
-
-            return "redirect:/main";
-        }
-        return "redirect:/login/view";
-    }
+//    @PostMapping("/process")
+//    public String loginProcess(UserDto user){
+//        log.info("@# u_id ===>"+user.getUId());
+//        log.info("@# u_pwd ===>"+user.getUPwd());
+//        int result = service.loginCheck(user);
+//        log.info("@#  result ====>"+result);
+//        if(result == 1){
+//
+//            return "redirect:/main";
+//        }
+//        return "redirect:/login/view";
+//    }
 
     @GetMapping("/register_page")
     public String registerPage(Model model){

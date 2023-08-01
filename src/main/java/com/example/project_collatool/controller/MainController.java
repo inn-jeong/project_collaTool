@@ -24,7 +24,7 @@ public class MainController {
 
     private final MainService mainService;
 
-    @PreAuthorize("isAuthenticated()")
+//    @PreAuthorize("isAuthenticated()")
     @RequestMapping("/")
     public String rootMain(HttpSession session){
 //        UserDto user = (UserDto) session.getAttribute("user");
@@ -34,7 +34,7 @@ public class MainController {
 //        return "redirect:/b_login";
         return "redirect:/main/view";
     }
-    @PreAuthorize("isAuthenticated()")
+//    @PreAuthorize("isAuthenticated()")
     @GetMapping("/view")
     public String mainView(Principal principal, Model model) {
         List<ProjectDto> projectDtoList= mainService.findAll();
