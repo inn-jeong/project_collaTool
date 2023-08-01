@@ -16,13 +16,23 @@ public class TodoListConverter implements Converter<TodoListEntity, TodoListDto>
     @Override
     public TodoListEntity toEntity(TodoListDto todoListDto) {
         Optional<TodoListEntity> byId = todoListRepository.findById(todoListDto.getTdId());
-        TodoListEntity entity = TodoListEntity.builder()
+        TodoListEntity entity;
+        if(!byId.isEmpty()){
+        entity = TodoListEntity.builder()
                 .tdId(byId.get().getTdId())
                 .projectId(todoListDto.getProjectId())
-                .userId(todoListDto.getUserId())
+                .uId(todoListDto.getUId())
                 .tdTitle(todoListDto.getTdTitle())
                 .tdCheck(todoListDto.getTdCheck())
                 .build();
+        }else{
+            entity = TodoListEntity.builder()
+                    .projectId(todoListDto.getProjectId())
+                    .uId(todoListDto.getUId())
+                    .tdTitle(todoListDto.getTdTitle())
+                    .tdCheck(todoListDto.getTdCheck())
+                    .build();
+        }
 
         return entity;
     }
@@ -32,7 +42,7 @@ public class TodoListConverter implements Converter<TodoListEntity, TodoListDto>
         TodoListDto dto = new TodoListDto();
         dto.setTdId(todoListEntity.getTdId());
         dto.setProjectId(todoListEntity.getProjectId());
-        dto.setUserId(todoListEntity.getUserId());
+        dto.setUId(todoListEntity.getUId());
         dto.setTdTitle(todoListEntity.getTdTitle());
         dto.setTdCheck(todoListEntity.getTdCheck());
         return dto;

@@ -11,7 +11,7 @@ public class TodoListDto {
 
     private Integer tdId;
     private Integer projectId;
-    private Integer userId;
+    private String uId;
     private String tdTitle;
     private Integer tdCheck;
 }

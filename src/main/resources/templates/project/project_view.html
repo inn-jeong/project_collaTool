@@ -1,14 +1,50 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>CollaTool - Project Dashboard</title>
   <!-- Add the Bootstrap CDN link -->
+  <script th:inline="javascript">
+    /* Function to calculate the progress in percentage */
+    function calculateProgress() {
+      var stardDateStr = $("#pCreated").val();
+      var endDateStr = $("#pDeadline").val();
+      var startDate = new Date(stardDateStr);
+      var endDate = new Date(endDateStr);
+      var currentDate = new Date();
 
+      // Calculate the total duration between startDate and endDate
+      var totalDuration = endDate.getTime() - startDate.getTime();
+      // Calculate the duration between startDate and currentDate
+      var currentDuration = currentDate.getTime() - startDate.getTime();
+
+      // Calculate the progress percentage
+      var progress = (currentDuration / totalDuration) * 100;
+      // Round the progress to two decimal places
+      return progress.toFixed(2);
+    }
+  </script>
 <body>
-  <th:block th:replace="fragments/sidebar"></th:block>
+  <th:block th:replace="fragments/sidebar :: sidebarFragment"></th:block>
+  <main class="col-lg-10 content">
+    <!-- Your project-specific content goes here -->
+    <h1>프로젝트 정보</h1>
+    <p>프로젝트명: <span th:text="${project.pName}"></span></p>
+    <p>종류: <span th:text="${project.pCategory}"></span></p>
+    <p>설명: <span th:text="${project.pDescript}"></span></p>
+    <p>시작일: <span th:text="${project.pCreated}"></span></p>
+    <p>마감일: <span th:text="${project.pDeadline}"></span></p>
+    <input type="hidden" id="pCreated" th:value="${project.pCreated}">
+    <input type="hidden" id="pDeadline" th:value="${project.pDeadline}">
+<!--    <div class="progress" >-->
+<!--      &lt;!&ndash; Calculate the progress in percentage based on pCreated and pDeadline &ndash;&gt;-->
+<!--      <div class="progress-bar" role="progressbar"-->
+<!--           th:style="'width: ' + ${project.pCreated}.getTime() + '%'" th:text="${calculateProgress()} + '%'"></div>-->
+<!--    </div>-->
 
-  <th:block th:replace="fragments/footer"></th:block>
+  </main>
+  <th:block th:replace="fragments/footer :: footerFragment"></th:block>
 </body>
+
 </html>

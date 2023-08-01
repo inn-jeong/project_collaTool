@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -50,7 +50,8 @@
 			</div>
 		</div>
 		<div class="mt-3">
-            <button type="button" class="btn btn-primary" onclick="btn_submit()">프로젝트 생성</button>
+            <button type="button" class="btn btn-primary mr-2" onclick="btn_submit()">프로젝트 생성</button>
+            <button type="button" class="btn btn-secondary" onclick="window.close()">취소</button>
 		</div>
     </form>
   </div>
@@ -71,12 +72,12 @@
             type:'POST',
            data:project,
             success:function(response){
-               alert("생성 완료");
+               alert("생성 완료.");
                opener.location.reload();
                window.close();
             },
             error:function(response){
-               alert("오류 발생");
+               alert("공백을 확인해주세요.");
             }
         });
     }

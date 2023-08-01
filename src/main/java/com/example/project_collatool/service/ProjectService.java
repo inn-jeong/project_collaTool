@@ -8,4 +8,5 @@ import java.util.List;
 public interface ProjectService {
     List<TodoListDto> findAllTodoList(Integer userId);
     void insertProject(ProjectDto projectDto);
+    ProjectDto findById(Integer projectId);
 }

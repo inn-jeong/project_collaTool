@@ -11,6 +11,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.security.Principal;
@@ -24,7 +25,7 @@ public class MainController {
 
     private final MainService mainService;
 
-//    @PreAuthorize("isAuthenticated()")
+    @PreAuthorize("is")
     @RequestMapping("/")
     public String rootMain(HttpSession session){
 //        UserDto user = (UserDto) session.getAttribute("user");
@@ -34,8 +35,9 @@ public class MainController {
 //        return "redirect:/b_login";
         return "redirect:/main/view";
     }
-//    @PreAuthorize("isAuthenticated()")
-    @GetMapping("/view")
+
+    @PreAuthorize("isAuthenticated()")
+    @RequestMapping("/view")
     public String mainView(Principal principal, Model model) {
         List<ProjectDto> projectDtoList= mainService.findAll();
         model.addAttribute("projectList",projectDtoList);

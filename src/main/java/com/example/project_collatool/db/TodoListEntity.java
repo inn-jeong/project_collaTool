@@ -20,8 +20,8 @@ public class TodoListEntity {
     @Column(name = "project_id", nullable = false)
     private Integer projectId;
 
-    @Column(name = "user_id", nullable = false)
-    private Integer userId;
+    @Column(name = "u_id", nullable = false)
+    private String uId;
 
     @Column(name = "td_title", nullable = false)
     private String tdTitle;

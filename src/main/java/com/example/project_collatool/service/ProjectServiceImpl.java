@@ -40,4 +40,9 @@ public class ProjectServiceImpl implements ProjectService{
         projectDto.setPCreated(projectDto.getPCreated());
         projectRepository.save(projectConverter.toEntity(projectDto));
     }
+
+    @Override
+    public ProjectDto findById(Integer projectId) {
+        return projectConverter.toDto(projectRepository.findById(projectId).get());
+    }
 }
