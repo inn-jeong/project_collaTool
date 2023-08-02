@@ -1,5 +1,6 @@
 package com.example.project_collatool.controller;
 
+import com.example.project_collatool.dto.UserDto;
 import com.example.project_collatool.service.LoginService;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
@@ -26,5 +27,11 @@ public class LoginRestController {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
         return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @PostMapping("/findId")
+    public ResponseEntity<String> findId(@RequestParam("uEmail") String uEmail){
+        UserDto dto = service.findId(uEmail);
+        return new ResponseEntity<>(dto.getUId(),HttpStatus.OK);
     }
 }

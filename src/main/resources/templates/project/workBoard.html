@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CollaTool - 게시판</title>
+    <style>
+  
+      .feed-container {
+        background-color: #fff;
+        border-radius: 5px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        max-width: 600px;
+        width: 100%;
+        overflow: hidden;
+      }
+  
+      .feed-post {
+        border-bottom: 1px solid #ccc;
+        padding: 15px;
+        display: flex;
+        flex-direction: column;
+      }
+  
+      .post-name {
+        font-size: 18px;
+        font-weight: bold;
+        margin-bottom: 5px;
+      }
+  
+      .post-author {
+        color: #666;
+        font-size: 14px;
+        margin-bottom: 5px;
+      }
+  
+      .post-content {
+        font-size: 16px;
+      }
+    </style>
+</head>
+<body>
+<th:block th:replace="~{fragments/sidebar :: sidebarFragment}"></th:block>
+
+  <main class="col-lg-10 content">
+    <!-- Your project-specific content goes here -->
+    <h1>게시판</h1>
+    <div id="insert-area">
+      <button type="button" class="btn btn-primary mb-2 mt-2" id="add-btn" onclick="goPopup()">(+) 게시글 추가</button>
+    </div>
+    <div class="feed-container">
+      <div th:each="board:${boardList}" class="feed-post">
+        <div class="post-name"><a href="#" th:text="${board.bTitle}" th:onclick="'popupModify(\''+${board.bId}+'\');'"></a></div>
+        <div class="post-author"><span th:text="${board.bUId}"></span></div>
+        <div class="post-content"><span th:text="${board.bContent}"></span></div>
+      </div>
+
+      <!-- Add more feed posts here -->
+    </div>
+  </main>
+
+<th:block th:replace="~{fragments/footer :: footerFragment}"></th:block>
+</body>
+<script>
+    function goPopup(){
+        var pop = window.open("/project/board-create","pop","width=600,height=600, scrollbars=yes, resizable=no");
+    }
+    function popupModify(bId){
+        var pop = window.open("/project/board-view/"+bId,"pop","width=600,height=600, scrollbars=yes, resizable=no");
+    }
+</script>
+</html>

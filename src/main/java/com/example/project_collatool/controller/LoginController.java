@@ -99,4 +99,10 @@ public class LoginController {
         return "redirect:/login/view?register=ok";
     }
 
+    @RequestMapping("/findId_page")
+    public String findId_page(HttpServletRequest request, Model model){
+
+        return "user/findId";
+    }
+
 }

@@ -13,12 +13,12 @@
     <nav id="sidebar" class="bg-dark text-white px-4 py-2" style="width: 250px;">
       <div class="d-flex flex-column h-100">
         <h2 class="mb-4">CollaTool</h2>
+<!--        <hr class="my-4">-->
+<!--        <a href="#" class="text-white mb-2">채팅</a>-->
         <hr class="my-4">
-        <a href="#" class="text-white mb-2">채팅</a>
-        <hr class="my-4">
-        <button type="button" class="btn btn-primary mb-2 mt-2" onclick="goPopup()">+ 프로젝트 생성</button>
-        <div th:each="project:${projectList}" >
-          <a th:href="'/project/view/'+${project.projectId}" class="text-white mb-2" th:text="${project.pName}"></a>
+        <button type="button" class="btn btn-primary mb-2 mt-2" onclick="goPopup()">(+) 프로젝트 생성</button>
+        <div th:each="project:${projectList}" class="mb-2">
+          <a th:href="'/project/view/'+${project.projectId}" class="text-white" th:text="${project.pName}"></a>
         </div>
         <div class="mt-auto"> <!-- Account Info at the bottom -->
             <hr class="my-4"> <!-- Horizontal line -->

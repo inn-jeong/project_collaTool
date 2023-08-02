@@ -1,10 +1,8 @@
 package com.example.project_collatool.controller;
 
-import com.example.project_collatool.converter.ProjectConverter;
-import com.example.project_collatool.db.TodoListEntity;
+import com.example.project_collatool.dto.BoardDto;
 import com.example.project_collatool.dto.ProjectDto;
 import com.example.project_collatool.dto.TodoListDto;
-import com.example.project_collatool.repository.ProjectRepository;
 import com.example.project_collatool.service.ProjectService;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
@@ -56,4 +54,32 @@ public class ProjectRestController {
         List<TodoListDto> todoList = projectService.findByUIdAndProjectId(uId,projectId);
         return new ResponseEntity<>(todoList,HttpStatus.OK);
     }
+
+    @PreAuthorize("isAuthenticated()")
+    @PostMapping("/board-create")
+    public ResponseEntity<BoardDto> boardCreate(BoardDto boardDto){
+        log.info("@# board create start===============");
+        projectService.saveBoard(boardDto);
+        log.info("@# board create select===============");
+        BoardDto tempDto = projectService.selectBoard(boardDto.getBProjectId(),boardDto.getBUId());
+        return new ResponseEntity<>(tempDto,HttpStatus.OK);
+    }
+
+    @PreAuthorize("isAuthenticated()")
+    @PostMapping("/board-modify")
+    public ResponseEntity<BoardDto> boardModify(BoardDto boardDto){
+        log.info("@# board create start===============");
+        projectService.updateBoard(boardDto.getBId(),boardDto.getBTitle(),boardDto.getBContent());
+        log.info("@# board create select===============");
+        BoardDto tempDto = projectService.selectBoard(boardDto.getBProjectId(),boardDto.getBUId());
+        return new ResponseEntity<>(tempDto,HttpStatus.OK);
+    }
+
+    @PreAuthorize("isAuthenticated()")
+    @PostMapping("/board-delete")
+    public ResponseEntity<String> boardDelete(@RequestParam Integer bId){
+        projectService.deleteBoard(bId);
+        return new ResponseEntity<>("ok",HttpStatus.OK);
+    }
+
 }

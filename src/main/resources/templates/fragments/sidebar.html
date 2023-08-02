@@ -53,10 +53,10 @@
     <nav class="navbar navbar-expand-xl navbar-dark">
       <div class="container">
         <a class="navbar-brand" href="/main/view">CollaTool</a>
-        <form class="d-flex ms-auto">
-          <input class="form-control me-2 search-input" type="search" placeholder="Search" aria-label="Search">
-          <button class="btn btn-light" type="submit">Search</button>
-        </form>
+<!--        <form class="d-flex ms-auto">-->
+<!--          <input class="form-control me-2 search-input" type="search" placeholder="Search" aria-label="Search">-->
+<!--          <button class="btn btn-light" type="submit">Search</button>-->
+<!--        </form>-->
       </div>
     </nav>
 
@@ -66,17 +66,20 @@
         <nav class="col-lg-2 sidebar bg-success">
           <ul class="nav flex-column">
             <li class="nav-item sidebar-item">
-              <a class="nav-link" href="/project/todoList">To-Do List</a>
+              <a class="nav-link" th:href="'/project/view/'+${session.projectId}">프로젝트 정보</a>
             </li>
             <li class="nav-item sidebar-item">
-              <a class="nav-link" href="#">Calendar</a>
+              <a class="nav-link" href="/project/todoList">할 일 목록</a>
             </li>
+<!--            <li class="nav-item sidebar-item">-->
+<!--              <a class="nav-link" href="#">일정</a>-->
+<!--            </li>-->
             <li class="nav-item sidebar-item">
-              <a class="nav-link" href="#">Bulletin Board</a>
+              <a class="nav-link" href="/project/baord">게시판</a>
             </li>
-            <li class="nav-item sidebar-item">
-              <a class="nav-link" href="#">File Management</a>
-            </li>
+<!--            <li class="nav-item sidebar-item">-->
+<!--              <a class="nav-link" href="#">파일 관리</a>-->
+<!--            </li>-->
             <!-- Add more project options here -->
           </ul>
         </nav>

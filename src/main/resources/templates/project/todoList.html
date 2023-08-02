@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CollaTool - TodoList</title>
+    <title>CollaTool - 할 일 목록</title>
 </head>
 <body>
 <th:block th:replace="~{fragments/sidebar :: sidebarFragment}"></th:block>
@@ -17,8 +17,8 @@
         <button type="button" class="btn btn-success mb-2 mt-2" id="insert-btn" onclick="insertTodo()" style="display: none">추가</button>
         <div id="main-area">
             <div th:unless="${todo.tdCheck == 1}" th:each="todo:${todoList}">
-                <input type="checkbox" class="checkBoxItem" th:value="${todo.tdId}">
-                <span th:text="${todo.tdTitle}"></span>
+                <input type="checkbox" class="checkBoxItem" th:id="${todo.tdId}" th:value="${todo.tdId}">
+                <label th:for="${todo.tdId}" th:text="${todo.tdTitle}"></label>
             </div>
         </div>
         <button type="button" class="btn btn-success mb-2 mt-2" id="complete-btn" onclick="complete()" style="display: none">수행 완료</button>
@@ -29,11 +29,12 @@
 </body>
 <script>
 
-    $(document).ready(function(){
+    function defaultEvent(){
         $(".checkBoxItem").on("click",function(){
            $("#complete-btn").show();
         });
-    })
+    }
+    defaultEvent();
     function createInput() {
         $("#insert-btn").show();
         // 새로운 input 엘리먼트 생성 및 설정
@@ -66,11 +67,12 @@
                 $("#main-area").empty();
                 $("#frm-select").empty();
                 response.forEach(function(todo){
-                    $("#main-area").append("<br>");
-                   $("#main-area").append("<input type='checkbox' class='checkBoxItem' value='"+todo.tdId+"'>");
-                   $("#main-area").append("<span>"+todo.tdTitle+"</span>");
+                   $("#main-area").append("<input type='checkbox' class='checkBoxItem' id='"+todo.tdId+"' value=' "+todo.tdId+"'> ");
+                   $("#main-area").append("<label for='"+todo.tdId+"'>"+todo.tdTitle+"</label>");
+                   $("#main-area").append("<br>");
                 });
                 $("#insert-btn").css("display","none");
+                defaultEvent();
             },
             error:function(response){
                 alert("오류발생");
@@ -100,11 +102,12 @@
                 $("#main-area").empty();
                 $("#frm-select").empty();
                 response.forEach(function(todo){
+                    $("#main-area").append("<input type='checkbox' class='checkBoxItem' id='"+todo.tdId+"' value=' "+todo.tdId+"'> ");
+                    $("#main-area").append("<label for='"+todo.tdId+"'>"+todo.tdTitle+"</label>");
                     $("#main-area").append("<br>");
-                    $("#main-area").append("<input type='checkbox' class='checkBoxItem' value='"+todo.tdId+"'>");
-                    $("#main-area").append("<span>"+todo.tdTitle+"</span>");
                 });
                 $("#complete-btn").css("display","none");
+                defaultEvent();
             },
             error:function(response){
                 alert("오류발생");

@@ -76,4 +76,11 @@ public class LoginServiceImpl implements LoginService{
         userRepository.save(userEntity);
         return userEntity;
     }
+
+    @Override
+    public UserDto findId(String uEmail) {
+        UserEntity entity = userRepository.findByuEmail(uEmail).get();
+
+        return userConverter.toDto(entity);
+    }
 }

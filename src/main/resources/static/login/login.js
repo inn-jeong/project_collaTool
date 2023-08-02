@@ -25,10 +25,10 @@ function naverLogout() {
 
 //비밀번호를 조회하기 위한 팝업창
 function findPassword(){
-    window.open("/loginT/findPassword_page","pop","width=570,height=420, scrollbars=no, resizable=no");
+    window.open("/login/findPassword_page","pop","width=570,height=420, scrollbars=no, resizable=no");
 }
 
 //아이디를 조회하기 위한 팝업창
 function  findId(){
-    window.open("/loginT/findId_page","pop","width=570,height=420, scrollbars=no, resizable=no");
+    window.open("/login/findId_page","pop","width=570,height=420, scrollbars=no, resizable=no");
 }
