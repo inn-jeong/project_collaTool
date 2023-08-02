@@ -6,15 +6,110 @@
     <title>CollaTool - TodoList</title>
 </head>
 <body>
-<th:block th:replace="fragments/sidebar :: sidebarFragment"></th:block>
+<th:block th:replace="~{fragments/sidebar :: sidebarFragment}"></th:block>
 
     <main class="col-lg-10 content">
         <!-- Your project-specific content goes here -->
         <h1>할 일 목록</h1>
-
-
+        <div id="insert-area">
+            <button type="button" class="btn btn-primary mb-2 mt-2" id="add-btn" onclick="createInput()">+ 할 일 추가</button>
+        </div>
+        <button type="button" class="btn btn-success mb-2 mt-2" id="insert-btn" onclick="insertTodo()" style="display: none">추가</button>
+        <div id="main-area">
+            <div th:unless="${todo.tdCheck == 1}" th:each="todo:${todoList}">
+                <input type="checkbox" class="checkBoxItem" th:value="${todo.tdId}">
+                <span th:text="${todo.tdTitle}"></span>
+            </div>
+        </div>
+        <button type="button" class="btn btn-success mb-2 mt-2" id="complete-btn" onclick="complete()" style="display: none">수행 완료</button>
+        <form id="frm-select"></form>
     </main>
 
-<th:block th:replace="fragments/footer :: footerFragment"></th:block>
+<th:block th:replace="~{fragments/footer :: footerFragment}"></th:block>
 </body>
+<script>
+
+    $(document).ready(function(){
+        $(".checkBoxItem").on("click",function(){
+           $("#complete-btn").show();
+        });
+    })
+    function createInput() {
+        $("#insert-btn").show();
+        // 새로운 input 엘리먼트 생성 및 설정
+        var inputElement = $("<input>").attr("type", "text").attr("class","form-control input-todo mb-1");
+
+        // div 엘리먼트에 새로운 input 엘리먼트 추가
+        $("#insert-area").append("<br>");
+        $("#insert-area").append(inputElement);
+    }
+
+    function insertTodo(){
+        var frm = $("#frm-select");
+
+        $(".input-todo").each(function(){
+           var input = $(this).val();
+           console.log(input);
+            frm.append("<input type='hidden' name='tdTitle' value='"+input+"'>");
+        });
+
+        var insertData = $("#frm-select").serialize();
+        console.log(insertData);
+        $.ajax({
+            url:"/projectRest/insert-todo",
+            type:"POST",
+            data:insertData,
+            success:function(response){
+                var addBtn = $("#add-btn");
+                $("#insert-area").empty();
+                $("#insert-area").append(addBtn);
+                $("#main-area").empty();
+                $("#frm-select").empty();
+                response.forEach(function(todo){
+                    $("#main-area").append("<br>");
+                   $("#main-area").append("<input type='checkbox' class='checkBoxItem' value='"+todo.tdId+"'>");
+                   $("#main-area").append("<span>"+todo.tdTitle+"</span>");
+                });
+                $("#insert-btn").css("display","none");
+            },
+            error:function(response){
+                alert("오류발생");
+            }
+        });
+    }
+
+    function complete(){
+        var frm = $("#frm-select");
+
+        $(".checkBoxItem:checked").each(function() {
+            var value = $(this).val();
+            console.log("test:"+$(this).val());
+            frm.append("<input type='hidden' name='tdId' value='"+value+"'>");
+        });
+
+        var completeData = $("#frm-select").serialize();
+        console.log(completeData);
+        $.ajax({
+            url:"/projectRest/complete-todo",
+            type:"POST",
+            data:completeData,
+            success:function(response){
+                var addBtn = $("#add-btn");
+                $("#insert-area").empty();
+                $("#insert-area").append(addBtn);
+                $("#main-area").empty();
+                $("#frm-select").empty();
+                response.forEach(function(todo){
+                    $("#main-area").append("<br>");
+                    $("#main-area").append("<input type='checkbox' class='checkBoxItem' value='"+todo.tdId+"'>");
+                    $("#main-area").append("<span>"+todo.tdTitle+"</span>");
+                });
+                $("#complete-btn").css("display","none");
+            },
+            error:function(response){
+                alert("오류발생");
+            }
+        });
+    }
+</script>
 </html>

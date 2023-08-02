@@ -26,16 +26,6 @@ public class ProjectServiceImpl implements ProjectService{
     private final ProjectConverter projectConverter;
 
     @Override
-    public List<TodoListDto> findAllTodoList(Integer userId) {
-        List<TodoListEntity> todoList = todoListRepository.findByUserId(userId);
-        List<TodoListDto> todoDtoList = new ArrayList<>();
-        for (TodoListEntity entity: todoList) {
-            todoDtoList.add(todoListConverter.toDto(entity));
-        }
-        return todoDtoList;
-    }
-
-    @Override
     public void insertProject(ProjectDto projectDto) {
         projectDto.setPCreated(projectDto.getPCreated());
         projectRepository.save(projectConverter.toEntity(projectDto));
@@ -44,5 +34,37 @@ public class ProjectServiceImpl implements ProjectService{
     @Override
     public ProjectDto findById(Integer projectId) {
         return projectConverter.toDto(projectRepository.findById(projectId).get());
+    }
+
+    @Override
+    public List<TodoListDto> findByUIdAndProjectId(String uId, Integer projectId) {
+        List<TodoListEntity> todoEntityList = todoListRepository.findByuIdAndProjectId(uId,projectId);
+        List<TodoListDto> todoDtoList = new ArrayList<>();
+        for (TodoListEntity entity: todoEntityList) {
+            todoDtoList.add(todoListConverter.toDto(entity));
+        }
+        return todoDtoList;
+    }
+
+    @Override
+    public void saveTodoList(List<String> tdtitles, Integer projectId, String uId) {
+        for (String title:tdtitles) {
+            if(!title.equals("")){
+                TodoListEntity entity = TodoListEntity.builder()
+                        .projectId(projectId)
+                        .uId(uId)
+                        .tdTitle(title)
+                        .tdCheck(0)
+                        .build();
+                todoListRepository.save(entity);
+            }
+        }
+    }
+
+    @Override
+    public void updateTodoList(List<Integer> uIds) {
+        for(Integer uId:uIds){
+            todoListRepository.updateTodoList(uId);
+        }
     }
 }

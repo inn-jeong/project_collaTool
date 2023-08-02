@@ -30,7 +30,7 @@ public class TodoListConverter implements Converter<TodoListEntity, TodoListDto>
                     .projectId(todoListDto.getProjectId())
                     .uId(todoListDto.getUId())
                     .tdTitle(todoListDto.getTdTitle())
-                    .tdCheck(todoListDto.getTdCheck())
+                    .tdCheck(0)
                     .build();
         }
 
