@@ -24,6 +24,7 @@ import java.util.List;
 @RequestMapping("/projectRest")
 public class ProjectRestController {
     private final ProjectService projectService;
+
     @PreAuthorize("isAuthenticated()")
     @PostMapping("/create")
     public ResponseEntity<String> createProject(ProjectDto projectDto){
