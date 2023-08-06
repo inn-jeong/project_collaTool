@@ -21,7 +21,7 @@ public class ProjectEntity {
     @Column(name = "project_id")
     private Integer projectId;
 
-    @Column(name = "p_name", length = 100, nullable = false)
+    @Column(name = "p_name", length = 100, nullable = false, unique = true)
     private String pName;
 
     @Column(name = "p_category", length = 50, nullable = false)

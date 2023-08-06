@@ -6,5 +6,5 @@ import com.example.project_collatool.dto.ProjectDto;
 import java.util.List;
 
 public interface MainService {
-    List<ProjectDto> findAll();
+    List<ProjectDto> findAll(String uId);
 }

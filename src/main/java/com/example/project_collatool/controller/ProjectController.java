@@ -13,6 +13,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -24,12 +28,13 @@ public class ProjectController {
 
     @PreAuthorize("isAuthenticated()")
     @RequestMapping("/view/{projectId}")
-    public String projectView(@PathVariable Integer projectId, HttpSession session, Model model){
+    public String projectView(@PathVariable Integer projectId, HttpSession session, Model model, Principal principal){
         ProjectDto project = projectService.findById(projectId);
-//        LocalDate startDate = LocalDate.parse(project.getPCreated(), DateTimeFormatter.ofPattern("MM/dd/yyyy"));
-//        LocalDate endDate = LocalDate.parse(project.getPDeadline(), DateTimeFormatter.ofPattern("MM/dd/yyyy"));
         session.setAttribute("projectId",projectId);
+        model.addAttribute("pMembers",projectService.findMembers(projectId));
         model.addAttribute("project",project);
+        model.addAttribute("progress",showProgress(project));
+        model.addAttribute("user", projectService.findUserByUid(principal.getName()));
         return "project/project_view";
     }
 
@@ -89,9 +94,22 @@ public class ProjectController {
     @RequestMapping("/board-search")
     public String boardSearch(@RequestParam("keyword") String keyword, HttpSession session, Model model){
         Integer projectId = (Integer) session.getAttribute("projectId");
-        List<BoardDto> boardList = projectService.selectBoartdSearch(projectId,keyword);
+        List<BoardDto> boardList = projectService.selectBoardSearch(projectId,keyword);
         model.addAttribute("boardList",boardList);
         return "project/workBoard";
+    }
+
+    private int showProgress(ProjectDto project){
+        LocalDate localStartDate = LocalDate.parse(project.getPCreated(), DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+        LocalDate localEndDate = LocalDate.parse(project.getPDeadline(),DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+        Date startDate = Date.from(localStartDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
+        Date endDate = Date.from(localEndDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
+
+        long totalDuration = endDate.getTime() - startDate.getTime();
+        long currentDuration = new Date().getTime() - startDate.getTime();
+        int progress = (int) ((currentDuration * 100) / totalDuration);
+        if(progress < 0) progress=0;
+        return progress;
     }
 
 }

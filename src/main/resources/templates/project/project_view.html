@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>CollaTool - 프로젝트</title>
+
   <!-- Add the Bootstrap CDN link -->
   <script th:inline="javascript">
     /* Function to calculate the progress in percentage */
@@ -37,14 +38,39 @@
     <p>마감일: <span th:text="${project.pDeadline}"></span></p>
     <input type="hidden" id="pCreated" th:value="${project.pCreated}">
     <input type="hidden" id="pDeadline" th:value="${project.pDeadline}">
-<!--    <div class="progress" >-->
-<!--      &lt;!&ndash; Calculate the progress in percentage based on pCreated and pDeadline &ndash;&gt;-->
-<!--      <div class="progress-bar" role="progressbar"-->
-<!--           th:style="'width: ' + ${project.pCreated}.getTime() + '%'" th:text="${calculateProgress()} + '%'"></div>-->
+<!--    <div class="progress-container">-->
+<!--      <div class="progress-bar" role="progressbar" th:style="'width: ' + ${progress} + '%'"-->
+<!--           th:text="${progress} + '%'"></div>-->
+<!--      <div class="start-date" id="startDate" th:text="${project.pCreated}"></div>-->
+<!--      <div class="end-date" id="endDate" th:text="${project.pDeadline}"></div>-->
 <!--    </div>-->
+    <div class="container mx-5">
+      <div class="progress">
+        <div class="progress-bar" role="progressbar" th:style="'width: ' + ${progress} + '.1%'"
+                     th:text="${progress} + '%'"></div>
+      </div>
+      <div class="d-flex justify-content-between mt-2">
+        <div class="start-date" id="startDate" th:text="${project.pCreated}"></div>
+        <div class="end-date" id="endDate" th:text="${project.pDeadline}"></div>
+      </div>
+    </div>
+    <hr>
+    <div class="pMember mt-5">
+      <h2>프로젝트 멤버명단</h2>
+      <div th:each="member:${pMembers}">
+        <p>
+          <span th:if="${member.uPosition == '팀장'}">팀장 - </span>
+          <span th:unless="${member.uPosition == '팀장'}">팀원 - </span>
+          <span th:text="${member.uName}"></span>
+        </p>
+      </div>
+      <button type="button" class="btn btn-primary mb-2 mt-2" onclick="">+ 멤버 추가</button>
+    </div>
 
   </main>
   <th:block th:replace="~{fragments/footer :: footerFragment}"></th:block>
 </body>
+<script>
 
+</script>
 </html>

@@ -2,6 +2,7 @@ package com.example.project_collatool.converter;
 
 import com.example.project_collatool.db.PMemberEntity;
 import com.example.project_collatool.dto.PMemberDto;
+import com.example.project_collatool.dto.UserDto;
 import com.example.project_collatool.repository.PMemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -34,4 +35,5 @@ public class PMemberConverter implements Converter<PMemberEntity, PMemberDto> {
         
         return dto;
     }
+
 }

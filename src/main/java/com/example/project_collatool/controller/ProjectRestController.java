@@ -28,9 +28,9 @@ public class ProjectRestController {
 
     @PreAuthorize("isAuthenticated()")
     @PostMapping("/create")
-    public ResponseEntity<String> createProject(ProjectDto projectDto){
+    public ResponseEntity<String> createProject(ProjectDto projectDto, Principal principal){
         log.info("@# project create ===> "+projectDto);
-        projectService.insertProject(projectDto);
+        projectService.insertProject(projectDto,principal.getName());
         return new ResponseEntity<String>("insert",HttpStatus.OK);
     }
 

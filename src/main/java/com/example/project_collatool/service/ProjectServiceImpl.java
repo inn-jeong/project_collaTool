@@ -4,20 +4,12 @@ package com.example.project_collatool.service;
 import com.example.project_collatool.converter.BoardConverter;
 import com.example.project_collatool.converter.ProjectConverter;
 import com.example.project_collatool.converter.TodoListConverter;
-import com.example.project_collatool.db.BoardEntity;
-import com.example.project_collatool.db.TodoListEntity;
-import com.example.project_collatool.dto.BoardDto;
-import com.example.project_collatool.dto.ProjectDto;
-import com.example.project_collatool.dto.TodoListDto;
-import com.example.project_collatool.repository.BoardRepository;
-import com.example.project_collatool.repository.ProjectRepository;
-import com.example.project_collatool.repository.TodoListRepository;
-import com.example.project_collatool.repository.UserRepository;
+import com.example.project_collatool.converter.UserConverter;
+import com.example.project_collatool.db.*;
+import com.example.project_collatool.dto.*;
+import com.example.project_collatool.repository.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -35,11 +27,21 @@ public class ProjectServiceImpl implements ProjectService{
     private final BoardRepository boardRepository;
     private final BoardConverter boardConverter;
     private final UserRepository userRepository;
+    private final UserConverter userConverter;
+    private final PMemberRepository pMemberRepository;
 
     @Override
-    public void insertProject(ProjectDto projectDto) {
+    public void insertProject(ProjectDto projectDto, String uId) {
         projectDto.setPCreated(projectDto.getPCreated());
         projectRepository.save(projectConverter.toEntity(projectDto));
+
+        Optional<ProjectEntity> project = projectRepository.findBypName(projectDto.getPName());
+        PMemberEntity member = PMemberEntity.builder()
+                        .projectId(project.get().getProjectId())
+                        .userId(userRepository.findByuId(uId).get().getUserId())
+                        .uPosition("팀장")
+                        .build();
+        pMemberRepository.save(member);
     }
 
     @Override
@@ -119,12 +121,29 @@ public class ProjectServiceImpl implements ProjectService{
     }
 
     @Override
-    public List<BoardDto> selectBoartdSearch(Integer bProjectId, String keyword) {
+    public List<BoardDto> selectBoardSearch(Integer bProjectId, String keyword) {
         List<BoardEntity> entityList = boardRepository.selectBoardSearch(bProjectId,keyword);
         List<BoardDto> dtoList = new ArrayList<>();
         for(BoardEntity entity : entityList){
             dtoList.add(boardConverter.toDto(entity));
         }
         return dtoList;
+    }
+
+    @Override
+    public List<ProjectMember> findMembers(Integer projectId) {
+        List<PMemberEntity> entities = pMemberRepository.findByProjectId(projectId);
+        List<ProjectMember> memberList = new ArrayList<>();
+        for(PMemberEntity entity:entities){
+            ProjectMember user = userConverter.toMember(userRepository.findByUserId(entity.getUserId()).get());
+            user.setUPosition(entity.getUPosition());
+            memberList.add(user);
+        }
+        return memberList;
+    }
+
+    @Override
+    public UserDto findUserByUid(String uId) {
+        return userConverter.toDto(userRepository.findByuId(uId).get());
     }
 }

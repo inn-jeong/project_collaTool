@@ -39,7 +39,7 @@ public class MainController {
     @PreAuthorize("isAuthenticated()")
     @RequestMapping("/view")
     public String mainView(Principal principal, Model model) {
-        List<ProjectDto> projectDtoList= mainService.findAll();
+        List<ProjectDto> projectDtoList= mainService.findAll(principal.getName());
         model.addAttribute("projectList",projectDtoList);
         return "main";
     }

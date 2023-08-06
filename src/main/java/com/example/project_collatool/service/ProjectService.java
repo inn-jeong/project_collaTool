@@ -1,15 +1,13 @@
 package com.example.project_collatool.service;
 
 import com.example.project_collatool.db.BoardEntity;
-import com.example.project_collatool.dto.BoardDto;
-import com.example.project_collatool.dto.ProjectDto;
-import com.example.project_collatool.dto.TodoListDto;
+import com.example.project_collatool.dto.*;
 import org.springframework.data.domain.Page;
 
 import java.util.List;
 
 public interface ProjectService {
-    void insertProject(ProjectDto projectDto);
+    void insertProject(ProjectDto projectDto,String uId);
     ProjectDto findById(Integer projectId);
     List<TodoListDto> findByUIdAndProjectId(String uId, Integer projectId);
     void saveTodoList(List<String> tdtitles, Integer projectId, String uId);
@@ -20,5 +18,7 @@ public interface ProjectService {
     BoardDto selectBoard(Integer bId);
     void updateBoard(Integer bId, String bTitle, String bContent);
     void deleteBoard(Integer bId);
-    List<BoardDto> selectBoartdSearch(Integer bProjectId, String keyword);
+    List<BoardDto> selectBoardSearch(Integer bProjectId, String keyword);
+    List<ProjectMember> findMembers(Integer projectId);
+    UserDto findUserByUid(String uId);
 }

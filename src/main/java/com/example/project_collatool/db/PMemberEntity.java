@@ -24,7 +24,7 @@ public class PMemberEntity {
     private Integer userId;
 
     @Column(name = "u_position", nullable = false)
-    private String u_position;
+    private String uPosition;
 
 
 }

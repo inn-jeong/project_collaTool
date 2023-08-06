@@ -2,10 +2,10 @@ package com.example.project_collatool.converter;
 
 import com.example.project_collatool.db.UserEntity;
 import com.example.project_collatool.dto.UserDto;
+import com.example.project_collatool.dto.ProjectMember;
 import com.example.project_collatool.dto.request.UserRequestDto;
 import com.example.project_collatool.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
-import org.apache.catalina.User;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -77,6 +77,22 @@ public class UserConverter implements Converter<UserEntity,UserDto>{
         dto.setUName(requestDto.getUName());
         dto.setUJumin(Integer.parseInt(requestDto.getUJumin()));
         dto.setUPhone(Integer.parseInt(requestDto.getUPhone()));
+
+        return dto;
+    }
+
+    public ProjectMember toMember(UserEntity entity){
+        ProjectMember dto = new ProjectMember();
+        dto.setUserId(entity.getUserId());
+        dto.setUId(entity.getUId());
+        dto.setUSocial(entity.getUSocial());
+        dto.setUPwd(entity.getUPwd());
+        dto.setUEmail(entity.getUEmail());
+        dto.setUName(entity.getUName());
+        dto.setUJumin(entity.getUJumin());
+        dto.setUPhone(entity.getUPhone());
+        dto.setUCreate(entity.getUCreated());
+        dto.setUSignout(entity.getUSignout());
 
         return dto;
     }
