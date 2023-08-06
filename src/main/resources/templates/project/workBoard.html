@@ -10,7 +10,7 @@
         background-color: #fff;
         border-radius: 5px;
         box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-        max-width: 600px;
+        max-width: 800px;
         width: 100%;
         overflow: hidden;
       }
@@ -48,14 +48,15 @@
     <div id="insert-area">
       <button type="button" class="btn btn-primary mb-2 mt-2" id="add-btn" onclick="goPopup()">(+) 게시글 추가</button>
     </div>
-    <div class="feed-container">
+    <div class="feed-container" id="feed-container" style="height: 700px;overflow: auto">
       <div th:each="board:${boardList}" class="feed-post">
         <div class="post-name"><a href="#" th:text="${board.bTitle}" th:onclick="'popupModify(\''+${board.bId}+'\');'"></a></div>
-        <div class="post-author"><span th:text="${board.bUId}"></span></div>
+        <div class="post-author"><span th:text="'작성자: '+${board.bUId}"></span></div>
         <div class="post-content"><span th:text="${board.bContent}"></span></div>
       </div>
 
       <!-- Add more feed posts here -->
+
     </div>
   </main>
 
@@ -68,5 +69,71 @@
     function popupModify(bId){
         var pop = window.open("/project/board-view/"+bId,"pop","width=600,height=600, scrollbars=yes, resizable=no");
     }
+
+    const feed = $("#feed-container");
+    let paging = 1;
+    function addPostsToFeed(posts){
+        posts.forEach(function(post) {
+            let postElement = document.createElement("div");
+            postElement.classList.add("feed-post");
+
+            let divName = document.createElement("div");
+            divName.classList.add("post-name");
+            let nameA = document.createElement("a");
+            nameA.href = '#';
+            nameA.textContent = post.bTitle;
+            nameA.addEventListener("click",function(){
+                popupModify(post.bId);
+            });
+
+
+            var divAhthor = document.createElement("div");
+            divAhthor.classList.add("post-author");
+            divAhthor.textContent = post.bUId;
+
+            var divContent = document.createElement("div");
+            divContent.classList.add("post-content");
+            divContent.textContent = post.bContent;
+
+            divName.appendChild(nameA);
+            postElement.appendChild(divName);
+            postElement.appendChild(divAhthor);
+            postElement.appendChild(divContent);
+
+            feed.appendChild(postElement);
+        });
+    }
+
+    function loadMorePosts() {
+        // Simulating an API call to fetch additional posts
+        // In a real scenario, you would use AJAX or fetch to retrieve data from the server
+        setTimeout(() => {
+            $.ajax({
+                url: "/projectRest/board-paging",
+                type:"POST",
+                contentType:"application/json",
+                data:{
+                    paging:paging
+                },
+                success: function(response){
+                    addPostsToFeed(response);
+                },
+                error: function(e){
+                    alert("로딩실패");
+                }
+            });
+            paging += 1;
+        }, 1000); // Simulating a delay for demonstration purposes
+    }
+
+    // Event listener for scrolling
+    // feed.addEventListener('scroll', () => {
+    //     if (feed.scrollTop + feed.clientHeight >= feed.scrollHeight) {
+    //         loadMorePosts();
+    //     }
+    // });
+
+    // Initial loading of more posts
+    // loadMorePosts();
 </script>
 </html>

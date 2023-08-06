@@ -29,23 +29,25 @@ public class LoginController {
     private final LoginService service;
     private final UserConverter convert;
 
-    @PreAuthorize("isAnonymous()")
     @RequestMapping("/view")
     public String loginPage(HttpServletRequest request, Model model){
-        String login_try = request.getParameter("login_try");
-        String register = request.getParameter("register");
-        if (login_try != null) {
-            if (login_try.equals("yes")) {
-                log.info("@# login_try===>"+login_try);
-                model.addAttribute("login_try", "yes");
-            }else if (login_try.equals("no")){
-                model.addAttribute("login_try", "no");
-            }
-        }
-        if (register != null && register.equals("ok")) {
-            log.info("@# register===>"+register);
-            model.addAttribute("register", "ok");
-        }
+//        String login_try = request.getParameter("login_try");
+//        String login_fail = request.getParameter("login_fail");
+//        String register = request.getParameter("register");
+//        if (login_fail != null) {
+//            if (login_fail.equals("fail")) {
+//                log.info("@# login_fail===>"+login_fail);
+//                model.addAttribute("login_fail", "fail");
+//            }
+//        }
+//        if (login_try != null && login_try.equals("no")){
+//            log.info("@# login_try===>"+login_try);
+//            model.addAttribute("login_try", "no");
+//        }
+//        if (register != null && register.equals("ok")) {
+//            log.info("@# register===>"+register);
+//            model.addAttribute("register", "ok");
+//        }
         return "user/login";
     }
 

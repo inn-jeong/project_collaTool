@@ -1,8 +1,10 @@
 package com.example.project_collatool.service;
 
+import com.example.project_collatool.db.BoardEntity;
 import com.example.project_collatool.dto.BoardDto;
 import com.example.project_collatool.dto.ProjectDto;
 import com.example.project_collatool.dto.TodoListDto;
+import org.springframework.data.domain.Page;
 
 import java.util.List;
 
@@ -18,4 +20,5 @@ public interface ProjectService {
     BoardDto selectBoard(Integer bId);
     void updateBoard(Integer bId, String bTitle, String bContent);
     void deleteBoard(Integer bId);
+    List<BoardDto> selectBoartdSearch(Integer bProjectId, String keyword);
 }

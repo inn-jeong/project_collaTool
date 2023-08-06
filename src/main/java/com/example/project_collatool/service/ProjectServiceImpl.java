@@ -15,6 +15,9 @@ import com.example.project_collatool.repository.TodoListRepository;
 import com.example.project_collatool.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -113,5 +116,15 @@ public class ProjectServiceImpl implements ProjectService{
     @Override
     public void deleteBoard(Integer bId) {
         boardRepository.deleteById(bId);
+    }
+
+    @Override
+    public List<BoardDto> selectBoartdSearch(Integer bProjectId, String keyword) {
+        List<BoardEntity> entityList = boardRepository.selectBoardSearch(bProjectId,keyword);
+        List<BoardDto> dtoList = new ArrayList<>();
+        for(BoardEntity entity : entityList){
+            dtoList.add(boardConverter.toDto(entity));
+        }
+        return dtoList;
     }
 }

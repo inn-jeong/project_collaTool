@@ -3,6 +3,8 @@ package com.example.project_collatool.repository;
 import com.example.project_collatool.db.BoardEntity;
 import com.example.project_collatool.dto.BoardDto;
 import jakarta.transaction.Transactional;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -13,6 +15,12 @@ import java.util.Optional;
 
 public interface BoardRepository extends JpaRepository<BoardEntity, Integer> {
     List<BoardEntity> findBybProjectId(Integer bProjectId);
+
+//    @Query("select b from BoardEntity b " +
+//            "where b.bProjectId=:bProjectId " +
+//            "order by b.bId desc")
+//    Page<BoardEntity> selectPagingBoard(@Param("bProjectId") Integer bProjectId);
+
     @Query("select b from BoardEntity b " +
             "where b.bId=" +
             "(select max(b2.bId) " +
@@ -30,4 +38,10 @@ public interface BoardRepository extends JpaRepository<BoardEntity, Integer> {
     void updateBoard(@Param("bId") Integer bId,
                                       @Param("bTitle") String bTitle,
                                       @Param("bContent") String bContent);
+
+    @Query("select b from BoardEntity b " +
+            "where b.bProjectId=:bProjectId " +
+            "and b.bTitle like %:keyword% " +
+            "or b.bContent like %:keyword%")
+    List<BoardEntity> selectBoardSearch(@Param("bProjectId") Integer bProjectId, @Param("keyword") String keyword);
 }

@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.security.Principal;
+import java.util.ArrayList;
 import java.util.List;
 
 @Slf4j
@@ -83,4 +84,10 @@ public class ProjectRestController {
         return new ResponseEntity<>("ok",HttpStatus.OK);
     }
 
+    @PreAuthorize("isAuthenticated()")
+    @PostMapping("/board-paging")
+    public ResponseEntity<List<BoardDto>> pagingBoard(@RequestParam int paging){
+        List<BoardDto> list = new ArrayList<>();
+        return new ResponseEntity<>(list,HttpStatus.OK);
+    }
 }

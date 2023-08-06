@@ -25,7 +25,7 @@
       <textarea class="form-control" id="bContent" name="bContent" th:text="${board.bContent}" disabled></textarea>
     </div>
     <div class="mt-3">
-      <button type="button" class="btn btn-primary mr-2" onclick="btn_submit()">수정</button>
+      <button th:if="${uId.equals(board.bUId)}" type="button" class="btn btn-primary mr-2" onclick="btn_submit()">수정</button>
       <button th:if="${uId.equals(board.bUId)}" type="button" class="btn btn-primary mr-2" onclick="btn_delete()">삭제</button>
       <button type="button" class="btn btn-secondary" onclick="window.close()">취소</button>
     </div>

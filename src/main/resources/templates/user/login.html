@@ -10,11 +10,12 @@
 </head>
 <body class="text-center align-middle">
 
-    <input type="hidden" id="register" th:value="${register}">
-<!--    <input type="hidden" id="login_try" th:value="${login_try}">-->
-    <div th:if="${param.error}">
-        <input type="hidden" id="login_fail" value="fail">
-    </div>
+<!--    <input th:if="${param.register}" type="hidden" id="register" th:value="${register}">-->
+    <input th:if="${param.register}" type="hidden" id="register" value="ok">
+<!--    <input th:if="${param.login_try}" type="hidden" id="login_try" th:value="${login_try}">-->
+    <input th:if="${param.login_try}" type="hidden" id="login_try" value="no">
+    <input th:if="${param.login_fail}" type="hidden" id="login_fail" value="fail">
+
     <main class="form-signin m-auto" id="login_table" style="width: 300px">
 <!--        <form method="post" id="frm_login" action="/login/process">-->
         <form method="post" id="frm_login" action="/login/process">

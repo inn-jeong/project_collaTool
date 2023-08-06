@@ -85,4 +85,13 @@ public class ProjectController {
         return "project/board_modify";
     }
 
+    @PreAuthorize("isAuthenticated()")
+    @RequestMapping("/board-search")
+    public String boardSearch(@RequestParam("keyword") String keyword, HttpSession session, Model model){
+        Integer projectId = (Integer) session.getAttribute("projectId");
+        List<BoardDto> boardList = projectService.selectBoartdSearch(projectId,keyword);
+        model.addAttribute("boardList",boardList);
+        return "project/workBoard";
+    }
+
 }

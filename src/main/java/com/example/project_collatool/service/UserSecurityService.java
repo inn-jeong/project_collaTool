@@ -27,8 +27,8 @@ public class UserSecurityService implements UserDetailsService {
     public UserDetails loadUserByUsername(String uId) throws UsernameNotFoundException {
         log.info("@# security uId ===>"+uId);
         Optional<UserEntity> _siteUser = this.userRepository.findByuId(uId);
-        log.info("@# security db user uId ======>"+_siteUser.get().getUId());
-        log.info("@# security db user uPwd ======>"+_siteUser.get().getUPwd());
+//        log.info("@# security db user uId ======>"+_siteUser.get().getUId());
+//        log.info("@# security db user uPwd ======>"+_siteUser.get().getUPwd());
         if(_siteUser.isEmpty()){
             log.info("@# security fail ======");
             throw new UsernameNotFoundException("사용자를 찾을 수 없습니다.");
