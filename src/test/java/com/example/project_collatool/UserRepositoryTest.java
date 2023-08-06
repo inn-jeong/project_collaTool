@@ -23,7 +23,6 @@ public class UserRepositoryTest {
                         .uName("test..."+i)
                         .uJumin(i)
                         .uPhone(100+i)
-                        .uPosition(1)
                         .uSignout(0)
                         .build();
             userRepository.save(user);
@@ -39,7 +38,6 @@ public class UserRepositoryTest {
                 .uName("test..."+1)
                 .uJumin(1)
                 .uPhone(100+1)
-                .uPosition(1)
                 .uSignout(0)
                 .build();
         userRepository.save(user);
