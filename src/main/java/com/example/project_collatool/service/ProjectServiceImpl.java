@@ -1,10 +1,7 @@
 package com.example.project_collatool.service;
 
 
-import com.example.project_collatool.converter.BoardConverter;
-import com.example.project_collatool.converter.ProjectConverter;
-import com.example.project_collatool.converter.TodoListConverter;
-import com.example.project_collatool.converter.UserConverter;
+import com.example.project_collatool.converter.*;
 import com.example.project_collatool.db.*;
 import com.example.project_collatool.dto.*;
 import com.example.project_collatool.repository.*;
@@ -29,6 +26,8 @@ public class ProjectServiceImpl implements ProjectService{
     private final UserRepository userRepository;
     private final UserConverter userConverter;
     private final PMemberRepository pMemberRepository;
+    private final CommentRepository commentRepository;
+    private final CommentConverter commentConverter;
 
     @Override
     public void insertProject(ProjectDto projectDto, String uId) {
@@ -167,5 +166,26 @@ public class ProjectServiceImpl implements ProjectService{
                     .build();
             pMemberRepository.save(entity);
         }
+    }
+
+    @Override
+    public List<CommentDto> selectAllComment(Integer bId) {
+        List<CommentEntity> entityList = commentRepository.selectBybId(bId);
+        List<CommentDto> dtoList = new ArrayList<>();
+        for(CommentEntity entity: entityList){
+            dtoList.add(commentConverter.toDto(entity));
+        }
+        return dtoList;
+    }
+
+    @Override
+    public void insertComment(CommentDto dto) {
+        log.info("@# insert-comment ===>"+dto);
+        commentRepository.save(commentConverter.toEntity(dto));
+    }
+
+    @Override
+    public void deleteComment(Integer cId) {
+        commentRepository.deleteCommentByCId(cId);
     }
 }

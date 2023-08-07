@@ -14,14 +14,22 @@ public class CommentConverter implements Converter<CommentEntity, CommentDto> {
     private final CommentRepository commentRepository;
     @Override
     public CommentEntity toEntity(CommentDto commentDto) {
-        Optional<CommentEntity> byId = commentRepository.findById(commentDto.getCId());
-
-        CommentEntity entity = CommentEntity.builder()
-                .cId(byId.get().getCId())
-                .bId(commentDto.getBId())
-                .uId(commentDto.getUId())
-                .cContent(commentDto.getCContent())
-                .build();
+//        Optional<CommentEntity> byId = commentRepository.findById(commentDto.getCId());
+        CommentEntity entity;
+        if(commentDto.getCId() != null){
+            entity = CommentEntity.builder()
+                    .cId(commentDto.getCId())
+                    .bId(commentDto.getBId())
+                    .uId(commentDto.getUId())
+                    .cContent(commentDto.getCContent())
+                    .build();
+        }else{
+            entity = CommentEntity.builder()
+                    .bId(commentDto.getBId())
+                    .uId(commentDto.getUId())
+                    .cContent(commentDto.getCContent())
+                    .build();
+        }
 
         return entity;
     }

@@ -81,6 +81,7 @@ public class ProjectController {
     public String boardView(@PathVariable Integer bId, Model model,Principal principal){
         model.addAttribute("uId",principal.getName());
         model.addAttribute("board",projectService.selectBoard(bId));
+        model.addAttribute("commentList",projectService.selectAllComment(bId));
         return "project/board_view";
     }
 

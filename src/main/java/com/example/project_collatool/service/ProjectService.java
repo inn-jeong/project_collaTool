@@ -4,6 +4,7 @@ import com.example.project_collatool.db.BoardEntity;
 import com.example.project_collatool.dto.*;
 import org.springframework.data.domain.Page;
 
+import javax.xml.stream.events.Comment;
 import java.util.List;
 
 public interface ProjectService {
@@ -23,4 +24,7 @@ public interface ProjectService {
     UserDto findUserByUid(String uId);
     List<UserDto> selectMembers(Integer projectId);
     void addMember(List<Integer> userId, Integer projectId);
+    List<CommentDto> selectAllComment(Integer bId);
+    void insertComment(CommentDto dto);
+    void deleteComment(Integer cId);
 }

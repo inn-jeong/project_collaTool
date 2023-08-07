@@ -15,7 +15,8 @@
   <form action="/projectRest/board-create" method="post" id="frm_board">
     <input type="hidden" name="bId" id="bId" th:value="${board.bId}">
     <input type="hidden" name="bProjectId" th:value="${board.bProjectId}">
-    <input type="hidden" name="bUId" th:value="${board.bUId}">
+    <input type="hidden" name="bUId" id="bUId" th:value="${board.bUId}">
+    <input type="hidden" id="user" th:value="${uId}">
     <div class="form-group">
       <label for="bTitle">제목</label>
       <input type="text" class="form-control" id="bTitle" name="bTitle" th:value="${board.bTitle}" disabled>
@@ -31,9 +32,24 @@
     </div>
   </form>
   <form id="comment-form">
-    <textarea id="comment-text" rows="4" cols="50" placeholder="댓글을 입력하세요..."></textarea>
-    <button type="button" onclick="">댓글 작성</button>
+    <div class="form-group mt-5">
+      <textarea id="comment-text" rows="4" cols="50" placeholder="댓글을 입력하세요..."></textarea>
+    </div>
+    <button type="button" class="btn btn-primary" onclick="btn_comment()">댓글 작성</button>
   </form>
+  <!-- 댓글 목록 -->
+  <div id="comment-list">
+    <!-- 여기에 댓글 목록이 동적으로 추가될 예정입니다 -->
+    <div th:each="comment:${commentList}" class='comment alert alert-secondary mt-2'>
+      <input type="hidden" class="cId" th:value="${comment.cId}">
+      <span th:text="'작성자: '+${comment.uId}"></span> <br>
+      <span th:text="${comment.cContent}"></span>
+      <div th:if="${comment.uId == uId}" style="text-align: right">
+        <button type="button" class='btn btn-sm btn-info ml-2 edit-comment'>수정</button>
+        <button class='btn btn-sm btn-danger ml-2 delete-comment'>삭제</button>
+      </div>
+    </div>
+  </div>
 </div>
 
 <!-- Add the Bootstrap JS and Popper.js CDN links (required for some Bootstrap components) -->
@@ -69,15 +85,66 @@
   }
 
   function btn_comment(){
-    var commentText = $("#comment-text").val();
+    let commentText = $("#comment-text").val();
+    let uId = $("#bUId").val();
+    let bId = $("#bId").val();
+    let user = $("#user").val();
+    console.log("uId:"+uId);
+    console.log("bId:"+bId);
     if (commentText.trim() !== "") {
       // 댓글 목록에 댓글 추가
-
-      $("#comment-list").append("<div class='comment'>" + commentText + "</div>");
-      $("#comment-text").val(""); // 입력 필드 초기화
+      $.ajax({
+        url:"/projectRest/insert-comment",
+        type:"POST",
+        data:{
+          bId:bId,
+          uId:uId,
+          cContent:commentText
+        },
+        success: function(response){
+          if(response=="ok"){
+            var commemtElement = " <div class='comment alert alert-secondary mt-2'>작성자:"+ uId +"<br>" + commentText;
+            if(uId == user){
+              commentElement = commemtElement + "<div style='text-align: right'>" +
+                      "<button class='btn btn-sm btn-info ml-2 edit-comment'>수정</button>" +
+                      "<button class='btn btn-sm btn-danger ml-2 delete-comment'>삭제</button>" +
+                      "</div></div>";
+            }else{
+              commentElement = commemtElement + "</div>";
+            }
+            // $("#comment-list").append("<div class='comment alert alert-secondary mt-2'>" +"작성자:"+ uId +"<br>" + commentText + "</div>");
+            $("#comment-list").append(commentElement);
+            $("#comment-text").val(""); // 입력 필드 초기화
+          }
+        }
+      });
     }else{
       alert("댓글 내용을 입력해주세요.");
     }
   }
+
+  $(document).ready(function(){
+    $("#comment-list").on("click", ".delete-comment", function() {
+      var selectElement = $(this).closest(".comment");
+      var cId = selectElement.find(".cId").val();
+      console.log("cId: "+cId)
+      if(confirm("정말 삭제하시겠습니까?")){
+        $.ajax({
+          url:"/projectRest/delete-comment",
+          type:"POST",
+          data:{
+            cId:cId
+          },
+          success: function(response){
+            console.log(response);
+            selectElement.remove();
+          },
+          error: function(e){
+            alert(e);
+          }
+        });
+      }
+    });
+  });
 </script>
 </html>

@@ -1,6 +1,7 @@
 package com.example.project_collatool.controller;
 
 import com.example.project_collatool.dto.BoardDto;
+import com.example.project_collatool.dto.CommentDto;
 import com.example.project_collatool.dto.ProjectDto;
 import com.example.project_collatool.dto.TodoListDto;
 import com.example.project_collatool.service.ProjectService;
@@ -101,7 +102,22 @@ public class ProjectRestController {
 
     @PreAuthorize("isAuthenticated()")
     @PostMapping("/insert-comment")
-    public ResponseEntity<String> insertComment(){
+    public ResponseEntity<String> insertComment(CommentDto dto){
+        projectService.insertComment(dto);
+        return new ResponseEntity<>("ok",HttpStatus.OK);
+    }
 
+    @PreAuthorize("isAuthenticated()")
+    @PostMapping("/select-comment")
+    public ResponseEntity<List<CommentDto>> selelctComment(Integer bId){
+        List<CommentDto> commentList = projectService.selectAllComment(bId);
+        return new ResponseEntity<>(commentList,HttpStatus.OK);
+    }
+
+    @PreAuthorize("isAuthenticated()")
+    @PostMapping("/delete-comment")
+    public ResponseEntity<String> deleteComment(@RequestParam Integer cId){
+        projectService.deleteComment(cId);
+        return new ResponseEntity<>("ok",HttpStatus.OK);
     }
 }
