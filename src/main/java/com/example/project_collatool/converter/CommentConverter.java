@@ -19,7 +19,7 @@ public class CommentConverter implements Converter<CommentEntity, CommentDto> {
         CommentEntity entity = CommentEntity.builder()
                 .cId(byId.get().getCId())
                 .bId(commentDto.getBId())
-                .userId(commentDto.getUserId())
+                .uId(commentDto.getUId())
                 .cContent(commentDto.getCContent())
                 .build();
 
@@ -31,7 +31,7 @@ public class CommentConverter implements Converter<CommentEntity, CommentDto> {
         CommentDto dto = new CommentDto();
         dto.setCId(commentEntity.getCId());
         dto.setBId(commentEntity.getBId());
-        dto.setUserId(commentEntity.getUserId());
+        dto.setUId(commentEntity.getUId());
         dto.setCContent(commentEntity.getCContent());
 
         return dto;

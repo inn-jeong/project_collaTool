@@ -7,9 +7,8 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class CommentDto {
-    private Integer cId;
-    private Integer bId;
-    private String uId;
-    private String cContent;
+public class AiRequestDto {
+    private Integer aiId;
+    private Integer aiProjectId;
+    private String aiContent;
 }

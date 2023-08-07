@@ -19,9 +19,11 @@
 
     <!-- Floating Text Area -->
     <div class="text-area-container" id="textAreaContainer" hidden>
-        작성중..
+        <div id="textArea">
+            작성중..
+        </div>
 <!--        <textarea class="form-control" placeholder="Enter your text"></textarea>-->
-<!--        <button class="btn btn-primary mt-2" id="saveText">Save</button>-->
+        <button class="btn btn-success mt-2" id="btn-rewrite" hidden>다시 작성</button>
     </div>
 
   <!-- Add the Bootstrap JS and Popper.js CDN links (required for some Bootstrap components) -->
@@ -31,6 +33,7 @@
         // JavaScript to show/hide the floating text area
         const textAreaContainer = document.getElementById('textAreaContainer');
         const toggleTextArea = document.getElementById('toggleTextArea');
+        const rewiteBtn = document.getElementById('btn-rewrite');
 
         toggleTextArea.addEventListener('click', () => {
             textAreaContainer.toggleAttribute('hidden');

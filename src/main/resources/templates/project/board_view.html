@@ -30,6 +30,10 @@
       <button type="button" class="btn btn-secondary" onclick="window.close()">취소</button>
     </div>
   </form>
+  <form id="comment-form">
+    <textarea id="comment-text" rows="4" cols="50" placeholder="댓글을 입력하세요..."></textarea>
+    <button type="button" onclick="">댓글 작성</button>
+  </form>
 </div>
 
 <!-- Add the Bootstrap JS and Popper.js CDN links (required for some Bootstrap components) -->
@@ -62,6 +66,18 @@
             alert("오류발생");
         }
     });
+  }
+
+  function btn_comment(){
+    var commentText = $("#comment-text").val();
+    if (commentText.trim() !== "") {
+      // 댓글 목록에 댓글 추가
+
+      $("#comment-list").append("<div class='comment'>" + commentText + "</div>");
+      $("#comment-text").val(""); // 입력 필드 초기화
+    }else{
+      alert("댓글 내용을 입력해주세요.");
+    }
   }
 </script>
 </html>

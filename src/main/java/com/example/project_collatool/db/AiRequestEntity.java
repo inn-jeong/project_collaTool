@@ -17,4 +17,11 @@ public class AiRequestEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ai_id")
     private Integer aiId;
+
+    @Column(name = "ai_project_id", nullable = false)
+    private Integer aiProjectId;
+
+    @Column(name = "ai_content", nullable = false)
+    private String aiContent;
+
 }

@@ -50,6 +50,7 @@
   <th:block th:replace="~{fragments/sidebar :: sidebarFragment}"></th:block>
   <main class="col-lg-10 content">
     <input type="hidden" id="bCategory" th:value="${project.pCategory}">
+    <input type="hidden" id="projectId" th:value="${project.projectId}">
     <!-- Your project-specific content goes here -->
     <h1>프로젝트 정보</h1>
     <p>프로젝트명: <span th:text="${project.pName}"></span></p>
@@ -95,18 +96,43 @@
   function addMember(){
     var pop = window.open("/project/addMember","pop","width=600,height=600, scrollbars=yes, resizable=no");
   }
+  let bCategory = $("#bCategory").val();
+  let projectId = $("#projectId").val();
   $(document).ready(function(){
-    let bCategory = $("#bCategory").val();
+    $("#btn-rewrite").on('click',function(){
+      $("#textArea").text('작성중..');
+      $("#btn-rewrite").attr("hidden",true);
+      $.ajax({
+        url:"/chatgpt/delete",
+        type:"POST",
+        data:{
+          projectId:projectId
+        },
+        success:function(response){
+          insertContent();
+        },
+        error:function(e){
+          alert(e);
+        }
+      });
+    });
+
     console.log("prompt"+bCategory);
     $.ajax({
-      url:"/chatgpt/chat",
+      url:"/chatgpt/check",
       type:"POST",
       data:{
-        prompt:bCategory
+        projectId:projectId
       },
       success:function(response){
-        console.log(response);
-        $("#textAreaContainer").html(response.choices[0].message.content);
+        if(response == "is null"){
+          insertContent();
+        }else{
+          console.log(response);
+          $("#textArea").html(response);
+          $("#btn-rewrite").removeAttr("hidden");
+        }
+
       },
       error:function(e){
         alert(e);
@@ -114,5 +140,23 @@
 
     });
   });
+  function insertContent(){
+    $.ajax({
+      url:"/chatgpt/chat",
+      type:"POST",
+      data:{
+        prompt:bCategory,
+        projectId:projectId
+      },
+      success:function(response){
+        console.log(response);
+        $("#textArea").html(response.choices[0].message.content);
+        $("#btn-rewrite").removeAttr("hidden");
+      },
+      error:function(e){
+        alert(e);
+      }
+    });
+  }
 </script>
 </html>

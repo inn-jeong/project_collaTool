@@ -98,4 +98,10 @@ public class ProjectRestController {
         projectService.addMember(userId,projectId);
         return new ResponseEntity<>("ok",HttpStatus.OK);
     }
+
+    @PreAuthorize("isAuthenticated()")
+    @PostMapping("/insert-comment")
+    public ResponseEntity<String> insertComment(){
+
+    }
 }

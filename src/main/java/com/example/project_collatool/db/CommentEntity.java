@@ -19,8 +19,8 @@ public class CommentEntity {
     @Column(name = "b_id", nullable = false)
     private Integer bId;
 
-    @Column(name = "user_id", nullable = false)
-    private Integer userId;
+    @Column(name = "u_id", nullable = false)
+    private String uId;
 
     @Column(name = "c_content", nullable = false)
     private String cContent;
