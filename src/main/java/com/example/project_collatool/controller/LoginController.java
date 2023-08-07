@@ -74,7 +74,7 @@ public class LoginController {
 
     @PostMapping("/joinProc")
     public String joinProc(@Valid UserRequestDto userDto, Errors errors, HttpSession session, Model model) {
-        UserDto user = (UserDto) session.getAttribute("user");
+
         if (errors.hasErrors()) {// 유효성 통과 못 했을 경우
             /* 회원가입 실패시 입력 데이터 값을 유지 */
             model.addAttribute("userDto", userDto);
@@ -107,12 +107,5 @@ public class LoginController {
         return "user/findId";
     }
 
-    @PreAuthorize("isAuthenticated()")
-    @RequestMapping("/user-info")
-    public String rootMain(Principal principal){
-        String uId = principal.getName();
-        UserDto user =
-        return "user/user_view";
-    }
 
 }

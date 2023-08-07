@@ -1,10 +1,12 @@
 package com.example.project_collatool.service;
 
 import com.example.project_collatool.converter.ProjectConverter;
+import com.example.project_collatool.converter.UserConverter;
 import com.example.project_collatool.db.PMemberEntity;
 import com.example.project_collatool.db.ProjectEntity;
 import com.example.project_collatool.db.UserEntity;
 import com.example.project_collatool.dto.ProjectDto;
+import com.example.project_collatool.dto.UserDto;
 import com.example.project_collatool.repository.PMemberRepository;
 import com.example.project_collatool.repository.ProjectRepository;
 import com.example.project_collatool.repository.UserRepository;
@@ -23,6 +25,7 @@ public class MainServiceImpl implements MainService{
     private final ProjectRepository projectRepository;
     private final ProjectConverter projectConverter;
     private final UserRepository userRepository;
+    private final UserConverter userConverter;
     private final PMemberRepository pMemberRepository;
 
     @Override
@@ -36,5 +39,15 @@ public class MainServiceImpl implements MainService{
         }
 
         return projectDtoList;
+    }
+
+    @Override
+    public UserDto findUser(String uId) {
+        return userConverter.toDto(userRepository.findByuId(uId).get());
+    }
+
+    @Override
+    public void updateUser(UserDto user) {
+        userRepository.updateByUserId(user.getUserId(),user.getUPwd(),user.getUEmail(),user.getUJumin(),user.getUPhone());
     }
 }

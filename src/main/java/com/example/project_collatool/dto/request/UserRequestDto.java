@@ -37,4 +37,6 @@ public class UserRequestDto {
     private String uPhone;
 
     private String uPosition;
+    private Integer userId;
+    private Integer uSignout;
 }

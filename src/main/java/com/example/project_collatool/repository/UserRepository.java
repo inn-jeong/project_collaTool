@@ -18,4 +18,14 @@ public interface UserRepository extends JpaRepository<UserEntity, Integer> {
             "where m.userId is null ")
     List<UserEntity> selectMembers(@Param("projectId") Integer projectId);
 
+
+    @Query("update UserEntity u " +
+            "set u.uPwd=:uPwd, " +
+            "u.uEmail=:uEmail, " +
+            "u.uJumin=:uJumin, " +
+            "u.uPhone=:uPhone " +
+            "where u.userId=:userId")
+    void updateByUserId(@Param("userId") Integer userId,@Param("uPwd") String uPwd, @Param("uEmail") String uEmail,
+                        @Param("uJumin") Integer uJumin, @Param("uPhone") Integer uPhone);
+
 }
