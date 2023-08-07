@@ -75,6 +75,7 @@ public class MainController {
         return "user/user_modify";
     }
 
+    @PreAuthorize("isAuthenticated()")
     @PostMapping("/joinProc")
     public String joinProc(@Valid UserRequestDto userDto, Errors errors, HttpSession session, Model model) {
 
@@ -98,9 +99,9 @@ public class MainController {
             return "user/user_modify";
         }
         log.info("@# modify ===>"+userDto);
-        mainService.updateUser(userConverter.toDto(userDto));
+        mainService.updateUser(userConverter.toDtoModify(userDto));
         log.info("@# modify success=============");
-        return "redirect:/main/user_view";
+        return "redirect:/main/user_info";
     }
 
 }

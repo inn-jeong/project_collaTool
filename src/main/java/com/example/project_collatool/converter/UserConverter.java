@@ -75,8 +75,22 @@ public class UserConverter implements Converter<UserEntity,UserDto>{
         dto.setUPwd(requestDto.getUPwd());
         dto.setUEmail(requestDto.getUEmail());
         dto.setUName(requestDto.getUName());
-        dto.setUJumin(Integer.parseInt(requestDto.getUJumin()));
-        dto.setUPhone(Integer.parseInt(requestDto.getUPhone()));
+        dto.setUJumin(requestDto.getUJumin());
+        dto.setUPhone(requestDto.getUPhone());
+
+        return dto;
+    }
+
+    public UserDto toDtoModify(UserRequestDto requestDto){
+        UserDto dto = new UserDto();
+        dto.setUserId(requestDto.getUserId());
+        dto.setUId(requestDto.getUId());
+        dto.setUSocial(requestDto.getUSocial());
+        dto.setUPwd(requestDto.getUPwd());
+        dto.setUEmail(requestDto.getUEmail());
+        dto.setUName(requestDto.getUName());
+        dto.setUJumin(requestDto.getUJumin());
+        dto.setUPhone(requestDto.getUPhone());
 
         return dto;
     }

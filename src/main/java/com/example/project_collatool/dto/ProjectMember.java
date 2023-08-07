@@ -16,8 +16,8 @@ public class ProjectMember {
     private String uPwd;
     private String uEmail;
     private String uName;
-    private Integer uJumin;
-    private Integer uPhone;
+    private String uJumin;
+    private String uPhone;
     private Timestamp uCreate;
     private Integer uSignout;
     private String uPosition;

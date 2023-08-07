@@ -40,10 +40,10 @@ public class UserEntity {
     private String uName;
 
     @Column(name = "u_jumin", nullable = false)
-    private Integer uJumin;
+    private String uJumin;
 
     @Column(name = "u_phone", nullable = false)
-    private Integer uPhone;
+    private String uPhone;
 
     @CreationTimestamp
     @Column(name = "u_created", nullable = false)

@@ -1,7 +1,9 @@
 package com.example.project_collatool.repository;
 
 import com.example.project_collatool.db.UserEntity;
+import jakarta.transaction.Transactional;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
@@ -18,14 +20,14 @@ public interface UserRepository extends JpaRepository<UserEntity, Integer> {
             "where m.userId is null ")
     List<UserEntity> selectMembers(@Param("projectId") Integer projectId);
 
-
+    @Transactional
+    @Modifying
     @Query("update UserEntity u " +
             "set u.uPwd=:uPwd, " +
             "u.uEmail=:uEmail, " +
-            "u.uJumin=:uJumin, " +
             "u.uPhone=:uPhone " +
             "where u.userId=:userId")
     void updateByUserId(@Param("userId") Integer userId,@Param("uPwd") String uPwd, @Param("uEmail") String uEmail,
-                        @Param("uJumin") Integer uJumin, @Param("uPhone") Integer uPhone);
+                        @Param("uPhone") String uPhone);
 
 }

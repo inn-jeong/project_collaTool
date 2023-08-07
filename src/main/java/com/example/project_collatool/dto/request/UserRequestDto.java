@@ -36,7 +36,6 @@ public class UserRequestDto {
     @Pattern(regexp = "01(?:0|1|[6-9])(\\d{3}|\\d{4})(\\d{4})$",message = "휴대폰 번호를 잘못 입력하셨습니다.")
     private String uPhone;
 
-    private String uPosition;
     private Integer userId;
     private Integer uSignout;
 }

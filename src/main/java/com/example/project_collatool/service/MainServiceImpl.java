@@ -12,6 +12,7 @@ import com.example.project_collatool.repository.ProjectRepository;
 import com.example.project_collatool.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -27,6 +28,7 @@ public class MainServiceImpl implements MainService{
     private final UserRepository userRepository;
     private final UserConverter userConverter;
     private final PMemberRepository pMemberRepository;
+    private final PasswordEncoder passwordEncoder;
 
     @Override
     public List<ProjectDto> findAll(String uId) {
@@ -43,11 +45,14 @@ public class MainServiceImpl implements MainService{
 
     @Override
     public UserDto findUser(String uId) {
-        return userConverter.toDto(userRepository.findByuId(uId).get());
+        UserEntity entity = userRepository.findByuId(uId).get();
+        log.info("@# findUser ===>"+entity.getUserId());
+        return userConverter.toDto(entity);
     }
 
     @Override
     public void updateUser(UserDto user) {
-        userRepository.updateByUserId(user.getUserId(),user.getUPwd(),user.getUEmail(),user.getUJumin(),user.getUPhone());
+        log.info("id:"+user.getUserId()+" pwd:"+user.getUPwd()+" email:"+user.getUEmail()+" phone:"+user.getUPhone());
+        userRepository.updateByUserId(user.getUserId(),passwordEncoder.encode(user.getUPwd()),user.getUEmail(),user.getUPhone());
     }
 }
