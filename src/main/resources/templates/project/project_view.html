@@ -4,7 +4,27 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>CollaTool - 프로젝트</title>
-
+  <style>
+    /* Custom CSS for positioning the floating button */
+    .floating-button {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      z-index: 999;
+    }
+    .text-area-container {
+      position: fixed;
+      bottom: 150px;
+      right: 40px;
+      width: 500px;
+      background-color: #fff;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      padding: 10px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+      z-index: 998;
+    }
+  </style>
   <!-- Add the Bootstrap CDN link -->
   <script th:inline="javascript">
     /* Function to calculate the progress in percentage */
@@ -29,6 +49,7 @@
 <body>
   <th:block th:replace="~{fragments/sidebar :: sidebarFragment}"></th:block>
   <main class="col-lg-10 content">
+    <input type="hidden" id="bCategory" th:value="${project.pCategory}">
     <!-- Your project-specific content goes here -->
     <h1>프로젝트 정보</h1>
     <p>프로젝트명: <span th:text="${project.pName}"></span></p>
@@ -74,5 +95,24 @@
   function addMember(){
     var pop = window.open("/project/addMember","pop","width=600,height=600, scrollbars=yes, resizable=no");
   }
+  $(document).ready(function(){
+    let bCategory = $("#bCategory").val();
+    console.log("prompt"+bCategory);
+    $.ajax({
+      url:"/chatgpt/chat",
+      type:"POST",
+      data:{
+        prompt:bCategory
+      },
+      success:function(response){
+        console.log(response);
+        $("#textAreaContainer").html(response.choices[0].message.content);
+      },
+      error:function(e){
+        alert(e);
+      }
+
+    });
+  });
 </script>
 </html>
