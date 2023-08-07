@@ -107,4 +107,12 @@ public class LoginController {
         return "user/findId";
     }
 
+    @PreAuthorize("isAuthenticated()")
+    @RequestMapping("/user-info")
+    public String rootMain(Principal principal){
+        String uId = principal.getName();
+        UserDto user =
+        return "user/user_view";
+    }
+
 }

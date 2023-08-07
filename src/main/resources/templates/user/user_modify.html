@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>CollaTool - 회원정보 수정</title>
+  <script type="text/javascript" src="/login/jquery.min.js"></script>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+</head>
+<body>
+<div class="container-sm mb-4">
+  <form name="reg_frm" id="reg_frm" class="table-primary" method="post" action="/login/joinProc">
+    <table align="center">
+      <tr height="60" width="120">
+        <td colspan="2" align="center">
+          <h1 class="fw-bold text-center text-success mb-4">회원 가입 신청</h1>
+        </td>
+      </tr>
+      <tr height="60">
+        <td style="width: 100px">User ID</td>
+        <td>
+          <input name="uId" id="uId" type="text" class="form-control" th:value="${userDto.uId}" size="20" style="width: 250px; display: inline">
+          <button type="button" id="check_btn" class="btn btn-secondary" onclick="sendRequest()" style="display: inline">중복 체크</button>
+          <span id="check_result"></span>
+          <span class="fs-6 text-danger" th:text="${valid_uId}"></span>
+
+        </td>
+      </tr>
+      <tr height="60">
+        <td>암    호</td>
+        <td>
+          <input name="uPwd" class="form-control" type="password" size="20">
+          <div><span class="fs-6 text-danger" th:text="${valid_uPwd}"></span></div>
+        </td>
+      </tr>
+      <tr height="60">
+        <td>암호 확인</td>
+        <td>
+          <input name="uPwdCheck" class="form-control" type="password" size="20">
+          <div><span class="fs-6 text-danger" th:text="${valid_uPwdCheck}"></span></div>
+        </td>
+      </tr>
+      <tr height="60">
+        <td>이   름</td>
+        <td>
+          <input name="uName" class="form-control" type="text" th:value="${userDto.uName}" size="20">
+          <!--        <input name="u_name" type="text" size="20">*-->
+          <div><span class="fs-6 text-danger" th:text="${valid_uName}"></span></div>
+        </td>
+      </tr>
+      <tr height="60">
+        <td>생년월일</td>
+        <td>
+          <input name="uJumin" class="form-control" type="text" th:value="${userDto.uJumin}" size="20" placeholder="예) 960429">
+          <div><span class="fs-6 text-danger" th:text="${valid_uJumin}"></span></div>
+        </td>
+      </tr>
+      <tr height="60">
+        <td>전화번호</td>
+        <td>
+          <input name="uPhone" class="form-control" type="text" th:value="${userDto.uPhone}" size="20" placeholder="(-)없이 입력">
+          <div><span class="fs-6 text-danger" th:text="${valid_uPhone}"></span></div>
+        </td>
+      </tr>
+      <tr height="60">
+        <td>E-mail</td>
+        <td>
+          <input name="uEmail" class="form-control" type="text" th:value="${userDto.uEmail}" size="60">
+          <div><span class="fs-6 text-danger" th:text="${valid_uEmail}"></span></div>
+        </td>
+      </tr>
+      <tr height="60">
+        <td colspan="2" align="center">
+          <input type="submit" id="insert_mem" class="btn btn-success" value="등록" disabled="disabled">
+          <input type="reset" value="다시입력" class="btn btn-secondary">
+          <input type="button" value="가입안함" class="btn btn-secondary" onclick="javascript:window.location='/login/view'">
+        </td>
+      </tr>
+    </table>
+  </form>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
+</body>
+<script type="text/javascript">
+  function sendRequest(){
+    var uId = $("#uId").val();
+    console.log("uId"+uId+"test");
+    if(uId == null || uId == "") return 0;
+    $.ajax({
+      url: "/loginRest/userCheck"
+      , type: "POST"
+      , data: {"uId": uId}
+      // dataType: 생략 가능(생략하면 자동으로 데이터타입 처리)
+      // ,dataType: "json"
+      , dataType: "text"
+      //data: 응답받는 것(ex>json, text 등)
+      , success: function (data) {
+        $("#check_result").css("color", "blue");
+        document.getElementById("check_result").innerHTML = "사용가능";
+        document.getElementById("check_btn").disabled = true;
+        document.getElementById("insert_mem").disabled = false;
+        document.getElementById("insert_mem").enabled = true;
+        $("#uId").prop("readonly",true);
+      }
+      , error: function (data) {
+        $("#check_result").css("color", "red");
+        document.getElementById("check_result").innerHTML = "사용불가";
+        document.getElementById("insert_mem").disabled = true;
+      }
+    });
+
+  }
+  $(document).ready(function (){
+    $("#uId").on("click",function (){
+      $("#uId").prop("readonly",false);
+      $("#check_btn").prop("disabled",false);
+      $("#insert_mem").prop("disabled",true);
+      $("#check_result").text('');
+    });
+  });
+  $(function(){
+    var naverMem = $("#naverMem").val();
+    if(naverMem == 'yes'){
+      alert("가입된 계정이 없어 회원가입 절차를 진행합니다.");
+    }
+  });
+</script>

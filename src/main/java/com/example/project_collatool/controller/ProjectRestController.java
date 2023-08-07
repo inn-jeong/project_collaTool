@@ -90,4 +90,12 @@ public class ProjectRestController {
         List<BoardDto> list = new ArrayList<>();
         return new ResponseEntity<>(list,HttpStatus.OK);
     }
+
+    @PreAuthorize("isAuthenticated()")
+    @PostMapping("/addMember")
+    public ResponseEntity<String> addMember(@RequestParam List<Integer> userId, HttpSession session){
+        Integer projectId = (Integer)session.getAttribute("projectId");
+        projectService.addMember(userId,projectId);
+        return new ResponseEntity<>("ok",HttpStatus.OK);
+    }
 }

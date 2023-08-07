@@ -3,6 +3,7 @@ package com.example.project_collatool.controller;
 import com.example.project_collatool.dto.BoardDto;
 import com.example.project_collatool.dto.ProjectDto;
 import com.example.project_collatool.dto.TodoListDto;
+import com.example.project_collatool.dto.UserDto;
 import com.example.project_collatool.service.ProjectService;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
@@ -97,6 +98,17 @@ public class ProjectController {
         List<BoardDto> boardList = projectService.selectBoardSearch(projectId,keyword);
         model.addAttribute("boardList",boardList);
         return "project/workBoard";
+    }
+
+    @PreAuthorize("isAuthenticated()")
+    @RequestMapping("/addMember")
+    public String addMember(HttpSession session,Model model,Principal principal){
+        String uId = principal.getName();
+        Integer projectId = (Integer)session.getAttribute("projectId");
+        List<UserDto> memberList = projectService.selectMembers(projectId);
+        model.addAttribute("memberList",memberList);
+
+        return "project/addMember";
     }
 
     private int showProgress(ProjectDto project){

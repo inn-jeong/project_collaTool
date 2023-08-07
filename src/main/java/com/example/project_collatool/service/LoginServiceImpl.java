@@ -83,4 +83,9 @@ public class LoginServiceImpl implements LoginService{
 
         return userConverter.toDto(entity);
     }
+
+    @Override
+    public UserDto findUser(String uId) {
+        return null;
+    }
 }

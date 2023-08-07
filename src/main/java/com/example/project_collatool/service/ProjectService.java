@@ -21,4 +21,6 @@ public interface ProjectService {
     List<BoardDto> selectBoardSearch(Integer bProjectId, String keyword);
     List<ProjectMember> findMembers(Integer projectId);
     UserDto findUserByUid(String uId);
+    List<UserDto> selectMembers(Integer projectId);
+    void addMember(List<Integer> userId, Integer projectId);
 }

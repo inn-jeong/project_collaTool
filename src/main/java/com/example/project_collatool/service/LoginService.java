@@ -15,5 +15,6 @@ public interface LoginService {
     Map<String, String> validateHandling(Errors errors);
     UserEntity create(UserDto userDto);
     UserDto findId(String uEmail);
+    UserDto findUser(String uId);
 
 }

@@ -64,13 +64,15 @@
           <span th:text="${member.uName}"></span>
         </p>
       </div>
-      <button type="button" class="btn btn-primary mb-2 mt-2" onclick="">+ 멤버 추가</button>
+      <button type="button" class="btn btn-primary mb-2 mt-2" onclick="addMember()">+ 멤버 추가</button>
     </div>
 
   </main>
   <th:block th:replace="~{fragments/footer :: footerFragment}"></th:block>
 </body>
 <script>
-
+  function addMember(){
+    var pop = window.open("/project/addMember","pop","width=600,height=600, scrollbars=yes, resizable=no");
+  }
 </script>
 </html>

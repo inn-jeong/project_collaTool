@@ -25,7 +25,7 @@ public class MainController {
 
     private final MainService mainService;
 
-    @PreAuthorize("is")
+    @PreAuthorize("isAuthenticated()")
     @RequestMapping("/")
     public String rootMain(HttpSession session){
 //        UserDto user = (UserDto) session.getAttribute("user");

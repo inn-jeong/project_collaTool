@@ -146,4 +146,26 @@ public class ProjectServiceImpl implements ProjectService{
     public UserDto findUserByUid(String uId) {
         return userConverter.toDto(userRepository.findByuId(uId).get());
     }
+
+    @Override
+    public List<UserDto> selectMembers(Integer projectId) {
+        List<UserEntity> entityList = userRepository.selectMembers(projectId);
+        List<UserDto> dtos = new ArrayList<>();
+        for(UserEntity entity:entityList){
+            dtos.add(userConverter.toDto(entity));
+        }
+        return dtos;
+    }
+
+    @Override
+    public void addMember(List<Integer> userId, Integer projectId) {
+        for(Integer userid: userId){
+            PMemberEntity entity = PMemberEntity.builder()
+                    .userId(userid)
+                    .projectId(projectId)
+                    .uPosition("팀원")
+                    .build();
+            pMemberRepository.save(entity);
+        }
+    }
 }
