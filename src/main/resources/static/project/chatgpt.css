@@ -1,0 +1,19 @@
+/* Custom CSS for positioning the floating button */
+.floating-button {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 999;
+}
+.text-area-container {
+    position: fixed;
+    bottom: 150px;
+    right: 40px;
+    width: 500px;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    z-index: 998;
+}

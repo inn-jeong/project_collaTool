@@ -4,11 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CollaTool - 할 일 목록</title>
+    <link rel="stylesheet" href="/project/chatgpt.css">
+
 </head>
 <body>
 <th:block th:replace="~{fragments/sidebar :: sidebarFragment}"></th:block>
 
     <main class="col-lg-10 content">
+        <input type="hidden" id="bCategory" th:value="${session.project.pCategory}">
+        <input type="hidden" id="projectId" th:value="${session.project.projectId}">
         <!-- Your project-specific content goes here -->
         <h1>할 일 목록</h1>
         <div id="insert-area">
@@ -27,6 +31,7 @@
 
 <th:block th:replace="~{fragments/footer :: footerFragment}"></th:block>
 </body>
+<script src="/project/chatgpt.js"></script>
 <script>
 
     function defaultEvent(){

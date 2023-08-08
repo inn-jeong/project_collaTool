@@ -32,6 +32,7 @@ public class ProjectController {
     public String projectView(@PathVariable Integer projectId, HttpSession session, Model model, Principal principal){
         ProjectDto project = projectService.findById(projectId);
         session.setAttribute("projectId",projectId);
+        session.setAttribute("project",project);
         model.addAttribute("pMembers",projectService.findMembers(projectId));
         model.addAttribute("project",project);
         model.addAttribute("progress",showProgress(project));
@@ -49,6 +50,10 @@ public class ProjectController {
     @RequestMapping("/todoList")
     public String todoList(HttpSession session,Model model,Principal principal){
         String uId = principal.getName();
+        ProjectDto project = (ProjectDto) session.getAttribute("project");
+        if(project == null){
+            return "redirect:/main/view";
+        }
         Integer projectId = (Integer)session.getAttribute("projectId");
         log.info("@# todo name ===>" + uId);
         List<TodoListDto> todoList = projectService.findByUIdAndProjectId(uId,projectId);
@@ -60,6 +65,10 @@ public class ProjectController {
     @PreAuthorize("isAuthenticated()")
     @RequestMapping("/baord")
     public String boardView(HttpSession session, Model model){
+        ProjectDto project = (ProjectDto) session.getAttribute("project");
+        if(project == null){
+            return "redirect:/main/view";
+        }
         Integer projectId = (Integer) session.getAttribute("projectId");
         List<BoardDto> boardList = projectService.selectAllBoard(projectId);
         model.addAttribute("boardList",boardList);
