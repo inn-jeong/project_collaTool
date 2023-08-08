@@ -188,4 +188,9 @@ public class ProjectServiceImpl implements ProjectService{
     public void deleteComment(Integer cId) {
         commentRepository.deleteCommentByCId(cId);
     }
+
+    @Override
+    public CommentDto selectMaxcId() {
+        return commentConverter.toDto(commentRepository.selectMaxcId().get());
+    }
 }

@@ -27,4 +27,5 @@ public interface ProjectService {
     List<CommentDto> selectAllComment(Integer bId);
     void insertComment(CommentDto dto);
     void deleteComment(Integer cId);
+    CommentDto selectMaxcId();
 }

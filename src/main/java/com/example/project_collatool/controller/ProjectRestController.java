@@ -102,9 +102,9 @@ public class ProjectRestController {
 
     @PreAuthorize("isAuthenticated()")
     @PostMapping("/insert-comment")
-    public ResponseEntity<String> insertComment(CommentDto dto){
+    public ResponseEntity<CommentDto> insertComment(CommentDto dto){
         projectService.insertComment(dto);
-        return new ResponseEntity<>("ok",HttpStatus.OK);
+        return new ResponseEntity<>(projectService.selectMaxcId(),HttpStatus.OK);
     }
 
     @PreAuthorize("isAuthenticated()")

@@ -31,22 +31,26 @@
       <button type="button" class="btn btn-secondary" onclick="window.close()">취소</button>
     </div>
   </form>
+  <hr>
   <form id="comment-form">
-    <div class="form-group mt-5">
-      <textarea id="comment-text" rows="4" cols="50" placeholder="댓글을 입력하세요..."></textarea>
+    <h2 class="mt-5">댓글</h2>
+    <div class="form-group mt-2">
+      <textarea id="comment-text" rows="4" placeholder="댓글을 입력하세요..." style="width: 100%"></textarea>
     </div>
     <button type="button" class="btn btn-primary" onclick="btn_comment()">댓글 작성</button>
   </form>
   <!-- 댓글 목록 -->
-  <div id="comment-list">
+  <div id="comment-list" class="mt-4">
     <!-- 여기에 댓글 목록이 동적으로 추가될 예정입니다 -->
     <div th:each="comment:${commentList}" class='comment alert alert-secondary mt-2'>
       <input type="hidden" class="cId" th:value="${comment.cId}">
-      <span th:text="'작성자: '+${comment.uId}"></span> <br>
+      <span th:text="'작성자: '+${comment.uId}" style="display: inline-block"></span>
+      <br>
       <span th:text="${comment.cContent}"></span>
       <div th:if="${comment.uId == uId}" style="text-align: right">
-        <button type="button" class='btn btn-sm btn-info ml-2 edit-comment'>수정</button>
-        <button class='btn btn-sm btn-danger ml-2 delete-comment'>삭제</button>
+        <button class='btn btn-sm btn-danger ml-2 delete-comment mb-3'>삭제</button>
+        <br>
+        <span th:text="${comment.cCreatedStr}"></span>
       </div>
     </div>
   </div>
@@ -98,26 +102,28 @@
         type:"POST",
         data:{
           bId:bId,
-          uId:uId,
+          uId:user,
           cContent:commentText
         },
         success: function(response){
-          if(response=="ok"){
-            var commemtElement = " <div class='comment alert alert-secondary mt-2'>작성자:"+ uId +"<br>" + commentText;
-            if(uId == user){
-              commentElement = commemtElement + "<div style='text-align: right'>" +
-                      "<button class='btn btn-sm btn-info ml-2 edit-comment'>수정</button>" +
-                      "<button class='btn btn-sm btn-danger ml-2 delete-comment'>삭제</button>" +
-                      "</div></div>";
-            }else{
-              commentElement = commemtElement + "</div>";
-            }
+          // var res = JSON.stringify(response);
+          // console.log(JSON.stringify(response));
+          console.log(response);
+            var commentElement = " <div class='comment alert alert-secondary mt-2'>" +
+                    "<input type='hidden' class='cId' value="+response.cid+">" +
+                    "작성자:"+ uId +
+                    // "<span style='text-align: right'>"+response.ccreatedStr+"</span>"+
+                    "<br>" + commentText+
+                    "<div style='text-align: right'>" +
+                    "<button class='btn btn-sm btn-danger ml-2 delete-comment mb-3'>삭제</button><br>" +
+                    response.ccreatedStr+
+                    "</div></div>";
             // $("#comment-list").append("<div class='comment alert alert-secondary mt-2'>" +"작성자:"+ uId +"<br>" + commentText + "</div>");
             $("#comment-list").append(commentElement);
             $("#comment-text").val(""); // 입력 필드 초기화
-          }
         }
       });
+
     }else{
       alert("댓글 내용을 입력해주세요.");
     }

@@ -6,6 +6,8 @@ import com.example.project_collatool.repository.CommentRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Optional;
 
 @Service
@@ -22,12 +24,14 @@ public class CommentConverter implements Converter<CommentEntity, CommentDto> {
                     .bId(commentDto.getBId())
                     .uId(commentDto.getUId())
                     .cContent(commentDto.getCContent())
+                    .cCreated(commentDto.getCCreated())
                     .build();
         }else{
             entity = CommentEntity.builder()
                     .bId(commentDto.getBId())
                     .uId(commentDto.getUId())
                     .cContent(commentDto.getCContent())
+                    .cCreated(LocalDateTime.now())
                     .build();
         }
 
@@ -40,7 +44,9 @@ public class CommentConverter implements Converter<CommentEntity, CommentDto> {
         dto.setCId(commentEntity.getCId());
         dto.setBId(commentEntity.getBId());
         dto.setUId(commentEntity.getUId());
+        dto.setCCreated(commentEntity.getCCreated());
         dto.setCContent(commentEntity.getCContent());
+        dto.setCCreatedStr(commentEntity.getCCreated().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")));
 
         return dto;
     }

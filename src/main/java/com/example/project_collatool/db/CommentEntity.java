@@ -4,6 +4,9 @@ import lombok.*;
 
 import jakarta.persistence.*;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+
 @Entity
 @Getter
 @NoArgsConstructor
@@ -24,4 +27,7 @@ public class CommentEntity {
 
     @Column(name = "c_content", nullable = false)
     private String cContent;
+
+    @Column(name = "c_created", nullable = false)
+    private LocalDateTime cCreated;
 }

@@ -9,6 +9,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface CommentRepository extends JpaRepository<CommentEntity, Integer> {
     @Query("select c from CommentEntity c where c.bId=:bId")
@@ -18,4 +19,8 @@ public interface CommentRepository extends JpaRepository<CommentEntity, Integer>
     @Modifying
     @Query("delete from CommentEntity c where c.cId=:cId")
     void deleteCommentByCId(@Param("cId") Integer cId);
+
+//    @Query("select max(c.cId) from CommentEntity c")
+    @Query("select a from CommentEntity a where a.cId = (select max(b.cId) from CommentEntity b)")
+    Optional<CommentEntity> selectMaxcId();
 }
