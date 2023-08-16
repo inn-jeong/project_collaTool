@@ -47,9 +47,10 @@
       <span th:text="'작성자: '+${comment.uId}" style="display: inline-block"></span>
       <br>
       <span th:text="${comment.cContent}"></span>
-      <div th:if="${comment.uId == uId}" style="text-align: right">
-        <button class='btn btn-sm btn-danger ml-2 delete-comment mb-3'>삭제</button>
-        <br>
+      <div style="text-align: right">
+        <div th:if="${comment.uId == uId}" >
+          <button class='btn btn-sm btn-danger ml-2 delete-comment mb-3'>삭제</button>
+        </div>
         <span th:text="${comment.cCreatedStr}"></span>
       </div>
     </div>

@@ -19,7 +19,7 @@ $(document).ready(function(){
         });
     });
 
-    console.log("prompt"+bCategory);
+    console.log("prompt"+bCategory+" id:"+projectId);
     $.ajax({
         url:"/chatgpt/check",
         type:"POST",
@@ -56,7 +56,8 @@ function insertContent(){
             $("#btn-rewrite").removeAttr("hidden");
         },
         error:function(e){
-            alert(e);
+            $("#textArea").text("오류 발생. 다시 시도해주세요.")
+            $("#btn-rewrite").removeAttr("hidden");
         }
     });
 }
